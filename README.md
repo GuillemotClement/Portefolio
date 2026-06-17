@@ -2,19 +2,26 @@
 
 Personal portfolio showcasing my background, technical skills and projects.
 
-## Stack 
+## Stack
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Astro](https://img.shields.io/badge/Astro-6.4-BC52EE?logo=astro&logoColor=BC52EE)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-4.3-06B6D4?logo=tailwindcss&logoColor=06B6D4)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=3178C6)
 
-This project was intentionally built without a frontend framework.
+## ✨ Features
 
-The goal was to keep the stack simple while demonstrating a solid understanding of the fundamentals of web development, including semantic HTML, responsive CSS and modern JavaScript.
+- 🎯 **Full-stack developer profile** - Backend, frontend, and DevOps experience
+- 📂 **Project showcase** - Selected projects with tech stack and descriptions
+- 🏢 **Work experience** - Professional background and achievements
+- 📬 **Contact form** - Direct communication via email
+- ⚡ **Performance-focused** - Static site generation with Astro for fast load times
+- 📱 **Fully responsive** - Mobile-first design with TailwindCSS
 
-## Features 
+## 🛠️ Why Astro?
 
-- Presentation of my professional background 
-- Technical skills overview
-- Project showcase
-- Contact form
+This portfolio leverages **Astro** for its excellent performance characteristics:
+
+- Zero JavaScript shipped by default (only when needed)
+- Static site generation for blazing-fast load times
+- Great developer experience with semantic HTML
+- Perfect for content-heavy sites like portfolios
