@@ -1,0 +1,15 @@
+---
+import {getExperiences} from "../services/experienceService.ts";
+import {loadId} from "astro/dist/vite-plugin-astro/utils";
+const experiences = await getExperiences();
+---
+
+<div class="">
+    <ul>
+        {experiences.map(exp => (
+            <li>
+                {exp.title}
+            </li>
+        ))}
+    </ul>
+</div>

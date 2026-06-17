@@ -1,0 +1,16 @@
+---
+import type { SkillProps } from './SkillCol.astro';
+
+interface Props {
+  skill: SkillProps
+}
+
+const { skill } = Astro.props as Props; 
+---
+
+<div class="bg-beige my-3 border-gray-200 border-2 p-3 flex items-center rounded-2xl">
+  <div class="w-5 h-5 me-5">
+    <img src={skill.logo} alt={skill.title}/>
+  </div>
+  <p class="font-bold">{skill.title}</p>
+</div>

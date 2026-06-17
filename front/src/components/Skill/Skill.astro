@@ -1,0 +1,18 @@
+---
+import { backSkills, frontSkills, toolSkills } from "../../data/skills";
+import SkillCol from "./SkillCol.astro";
+---
+<div class="bg-beige py-20">
+    <div class="container mx-auto">
+        <div class="mb-10">
+            <h2 class="text-accent uppercase mb-3 italic">Compétences</h2>
+            <p class="text-3xl">Ma stack technique</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-8">
+            <SkillCol skills={frontSkills} title="Front-End"/>
+            <SkillCol skills={backSkills} title="Back-End" />
+            <SkillCol skills={toolSkills} title="Outils" />
+        </div>
+    </div>    
+</div>

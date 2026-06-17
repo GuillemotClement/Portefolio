@@ -1,0 +1,73 @@
+---
+import Tag from "../Ui/Tag.astro";
+
+type FeatureProps = {
+  id: number;
+  title: string;
+  status: string[];
+  technos: string[];
+  description: string;
+  reason: string;
+  features: string[],
+  github: string;
+  image: string;
+  link: string;
+}
+
+// convention typage Astro 
+interface Props {
+  project: FeatureProps;
+  reversed?: boolean;
+}
+
+const { project, reversed } = Astro.props as Props;
+const { features, status, technos, github, link } = project;
+
+---
+
+<div class={`border border-gray-300 my-3 flex ${reversed ? 'flex-row-reverse' : ''}`}>
+  <div class="flex-1">
+    <img src={project.image} alt={project.title}  />\
+  </div>
+  <div class="flex-1">
+    <div class="flex justify-between">
+      <h3>{project.title}</h3>
+      <ul class="flex gap-x-3">
+        {status.map((tag) => (
+          <Tag title={tag} />
+        ))}
+      </ul>
+    </div>
+
+    <p>{project.description}</p>
+
+    <div class="">
+      <h4>Raisons</h4>
+      <p>{project.reason}</p>
+    </div>
+
+    <h4>Fonctionnalités</h4>
+    <ul>
+      {features.map((feature) => (
+        <li>{feature}</li>
+      ))}
+    </ul>
+
+    <ul>
+      {technos.map(techno => (
+        <Tag title={techno} />
+      ))}
+    </ul>
+
+    <div class="">
+      <a href={link} target="_blank">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        Voir le site</a>
+      <a href={github} target="_blank">
+        <i class="fa-brands fa-github"></i>
+        Code source
+      </a>
+    </div>
+
+  </div>
+</div>

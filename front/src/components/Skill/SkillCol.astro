@@ -1,0 +1,26 @@
+---
+import SkillItem from './SkillItem.astro';
+ 
+export type SkillProps = {
+  id: number,
+  title: string;
+  logo: string;
+}
+
+interface Props {
+  skills: SkillProps[],
+  title: string;
+}
+
+const { skills, title } = Astro.props as Props;
+---
+
+<div class="border-2 border-gray-200 bg-white rounded-2xl  p-5">
+  <h3 class="font-bold uppercase text-center">{title}</h3>
+  <ul>
+    {skills.map(skill => (
+      <SkillItem skill={skill} />
+    ))}
+  </ul>
+
+</div>
