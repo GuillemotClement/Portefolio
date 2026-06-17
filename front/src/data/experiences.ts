@@ -3,7 +3,7 @@ export const experiences = [
     id: 1,
     title: "Développeur Full-Stack (Alternance)",
     enterprise: "Evode",
-    periode: "Septembre 2024 - Juin 2026",
+    date: "Septembre 2024 - Juin 2026",
     city: "Lorgues, Var(France)",
     src: "/images/logo-evode.png",
     tasks: [
@@ -17,7 +17,7 @@ export const experiences = [
     id: 2,
     title: "Développeur Full-Stack (Stage)",
     enterprise: "Creamania Communication",
-    periode: "Mars 2024 - Mai 2024",
+    date: "Mars 2024 - Mai 2024",
     city: "Fréjus, Var(France)",
     src: "/images/logo-creamania.svg",
     tasks: [
@@ -30,7 +30,7 @@ export const experiences = [
   {
     title: "Technicien de maintenance aéronautique",
     enterprise: "Armée de Terre",
-    periode: "Mars 2016 - Août 2023",
+    date: "Mars 2016 - Août 2023",
     city: "Le Cannet-des-Maures, Var (France)",
     src: "/images/logo-armee.png",
     tasks: [

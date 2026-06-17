@@ -1,0 +1,20 @@
+---
+import { experiences } from "../../data/experiences";
+import ExperienceCard from "./ExperienceCard.astro";
+
+
+---
+
+<div class="bg-beige" id="experience">
+    <div class="container mx-auto">
+        <h3>Parcours</h3>
+        <h2>Expérience professionnelle</h2>
+
+        <ul>
+            {experiences.map(exp => (
+                <ExperienceCard experience={exp} />
+            ))}
+        </ul>
+    </div>
+
+</div>

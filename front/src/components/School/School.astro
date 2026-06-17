@@ -1,0 +1,18 @@
+---
+import { schools } from "../../data/school";
+import SchoolCard from "./SchoolCard.astro";
+---
+
+<div class="" id="formation">
+    <div class="container mx-auto">
+        <div class="">
+            <div class="">Formation</div>
+            <data value="">Mon cursus</data>
+        </div>
+        <div class="">
+            {schools.map(school => ( 
+                <SchoolCard school={school} />
+            ))}
+        </div>
+    </div>
+</div>

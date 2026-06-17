@@ -1,0 +1,51 @@
+export const schools = [
+  {
+    id: 1,
+    title: "Concepteur Développeur d'Applications",
+    subtitle: "Titre Professionnel (Bac+3/4)",
+    city: "Fréjus, Var (France)",
+    date: "Octobre 2024 - Juin 2026",
+    image: "images/logo-oclock.png",
+  },
+  {
+    id: 2,
+    title: "Développeur Web et Web Mobile",
+    subtitle: "Titre Professionnel (Bac+2)",
+    city: "Fontenay-Le-Comte, Vendée(France)",
+    date: "Octobre 2023 - Juin 2024",
+    image: "images/logo-afpa.jpg",
+  },
+  {
+    id: 3,
+    title: "Certificat Technique du Premier Degré",
+    subtitle: "Technicien de maintenance aéronautique – Avionique et armement",
+    city: "Rochefort, Charente-Maritime(France)",
+    date: "Novembre 2016 - Février 2018",
+    image: "images/logo-ba721.png",
+  },
+  {
+    id: 4,
+    title: "Certificat Militaire de Premier Degré",
+    subtitle:
+      "Formation au commandement et à l'encadrement d'équipe (grade de sergent)",
+    city: "Saint-Maixent-l'École, Deux-Sèvres(France)",
+    date: "Mars 2016 - Novembre 2016",
+    image: "images/Logo-ensoa.jpg",
+  },
+  {
+    id: 5,
+    title: "BTS SIO SISR",
+    subtitle: "Services Informatiques aux Organisations",
+    city: "Lycée de la Salle, Rennes, Ile-Et-Vilaine(France)",
+    date: "2013 - 2015",
+    image: "images/logo-lasalle.png",
+  },
+  {
+    id: 6,
+    title: "Bac Pro ELEEC",
+    subtitle: "Electrotechnique Energie Equipements Communicants",
+    city: "Lycée Jeanne d'Arc Saint Ivy, Pontivy, Morbihan(France)",
+    date: "2010 - 2013",
+    image: "images/logo-jasi.png",
+  },
+];

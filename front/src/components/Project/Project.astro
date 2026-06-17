@@ -3,8 +3,8 @@ import ProjectCard from "./ProjectCard.astro";
 
 import { projects } from "../../data/projects";
 ---
-
-<div class="border border-blue-500">
+<div class="" id="project">
+<div class="border border-blue-500 container mx-auto">
 
 	<h2>Projects</h2>
 	<div class="flex justify-between">
@@ -16,4 +16,5 @@ import { projects } from "../../data/projects";
 	{projects.map(project => (
 		<ProjectCard project={project} reversed={project.id % 2 === 1}/>
 	))}
+</div>
 </div>
