@@ -1,0 +1,27 @@
+
+
+{extends 'layout.latte'}
+
+{block content}
+    <h2>{$title}</h2>
+    <form action="/register" method="post">
+        <div class="">
+            <label for="">Username</label>
+            <input type="text" name="username">
+        </div>
+
+        <div class="">
+            <label for="">Password</label>
+            <input type="password" name="password">
+        </div>
+
+        <div class="">
+            <label for="">Confirm password</label>
+            <input type="password" name="confirmPassword">
+        </div>
+
+        <div class="">
+            <button type="submit">Inscription</button>
+        </div>
+    </form>
+{/block}

@@ -36,3 +36,28 @@ Permet de gérer le contenue de manière dynamique.
 # lancement du serveur de dev php
 php -S localhost:8090 -t public
 ```
+
+### Stack 
+
+- (`Flight`)[https://docs.flightphp.com/en/v3]
+- Postgres
+- Docker 
+- Adminer 
+
+### Architecture 
+
+```tree
+api/
+├── app/
+│   ├── config/
+│   └── views/
+├── data/
+├── public/
+│   └── index.php
+├── vendor/
+└── composer.json
+```
+
+- `app/config`: configuration files (event, routes)
+- `app/views/`: template for rendering pages
+- `data`: JSON file  
