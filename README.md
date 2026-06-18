@@ -25,3 +25,14 @@ This portfolio leverages **Astro** for its excellent performance characteristics
 - Static site generation for blazing-fast load times
 - Great developer experience with semantic HTML
 - Perfect for content-heavy sites like portfolios
+
+---
+
+## API
+
+Permet de gérer le contenue de manière dynamique.
+
+```shell
+# lancement du serveur de dev php
+php -S localhost:8090 -t public
+```
