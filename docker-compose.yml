@@ -4,7 +4,8 @@ services:
       context: ./front
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports: "4321:4321"
+    expose:
+      - "4321"
     # environment:
     #   PUBLIC_POCKETBASE_URL: ${PUBLIC_POCKETBASE_URL}
     #   POCKETBASE_KEY: ${POCKETBASE_KEY}
