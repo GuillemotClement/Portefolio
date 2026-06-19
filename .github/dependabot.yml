@@ -5,7 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # astro 
+  - package-ecosystem: "npm"
+    directory: "/front"
+    schedule:
+      interval: "weekly"
+
+  # docker image
+  - package-ecosystem: "docker"
+    directory: "/"
     schedule:
       interval: "weekly"
