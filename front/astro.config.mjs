@@ -12,6 +12,8 @@ export default defineConfig({
   env: {
     schema: {
       GITHUB_KEY: envField.string({ context: "server", access: "secret" }),
+      API_URL: envField.string({ context: "server", access: "secret" }),
+      POCKETBASE_KEY: envField.string({ context: "server", access: "secret" }),
     },
   },
   output: "server",

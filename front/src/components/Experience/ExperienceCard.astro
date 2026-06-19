@@ -1,14 +1,25 @@
 ---
-const { experience } = Astro.props;
+import type { Experience } from "../../types/types";
+import { getFormatedPeriode } from "../../utils/date";
+
+interface Props {
+  experience: Experience
+}
+
+const { experience } = Astro.props as Props;
+
+const periode = getFormatedPeriode(experience.startPeriode, experience.endPeriode);
+
+
 ---
 
 <div class="flex">
   <div class="flex-1">
     <p>{experience.enterprise}</p>
-    <p>{experience.date}</p>
+    <p>{periode}</p>
     <p>{experience.city}</p>
     <div class="">
-      <img src={experience.src} alt={experience.entreprise}>
+      <img src={experience.image} alt={experience.enterprise}>
     </div>
   </div>
 
