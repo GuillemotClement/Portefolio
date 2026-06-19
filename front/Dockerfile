@@ -6,7 +6,7 @@ RUN corepack enable
 
 COPY package.json pnpm-lock.yaml ./
 # RUN pnpm install --frozen-lockfile # temp debug
-RUN pnpm install 
+RUN pnpm install --reporter=append-only
 
 COPY . .
 RUN pnpm build
