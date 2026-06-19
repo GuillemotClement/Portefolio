@@ -11,8 +11,18 @@ updates:
     schedule:
       interval: "weekly"
 
-  # docker image
-  - package-ecosystem: "docker"
+  # docker =======================
+  - package-ecosystem: "docker-compose"
     directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/front"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/pocketbase"
     schedule:
       interval: "weekly"
