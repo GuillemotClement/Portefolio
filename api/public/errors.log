@@ -1,5 +1,0 @@
-[2026-06-18 11:17:01] SQL Error: SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near "user"
-LINE 1: INSERT INTO user (username, password) VALUES ($1, $2)
-                    ^
- 
-
