@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports: "4321:4321"
-    environment:
-      PUBLIC_POCKETBASE_URL: ${PUBLIC_POCKETBASE_URL}
-      POCKETBASE_KEY: ${POCKETBASE_KEY}
+    # environment:
+    #   PUBLIC_POCKETBASE_URL: ${PUBLIC_POCKETBASE_URL}
+    #   POCKETBASE_KEY: ${POCKETBASE_KEY}
 
   pocketbase:
     build:
