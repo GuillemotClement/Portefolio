@@ -2,11 +2,10 @@ FROM node:lts-alpine as runtime
 
 WORKDIR /app
 
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 
 COPY package.json pnpm-lock.yaml ./
-# RUN pnpm install --frozen-lockfile # temp debug
-RUN pnpm install --reporter=append-only
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 RUN pnpm build
