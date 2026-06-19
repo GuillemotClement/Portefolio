@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProjectController!{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto">
+        <div class="">
+            <a href="{{ path('app_new_techno') }}">Ajouter</a>
+        </div>
+        {% if technos %}
+            {% for techno in technos %}
+                <div class="">{{ techno }}</div>
+            {% endfor %}
+        {% else %}
+        <p>Pas de techno</p>
+        {% endif %}
+    </div>
+{% endblock %}
