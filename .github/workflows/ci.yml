@@ -30,10 +30,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 11
+          version: 10.15.0 # meme version que dans le package.json
 
       - name: Install dependancies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
         working-directory: front
 
       # check quality code
