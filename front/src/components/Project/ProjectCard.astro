@@ -1,27 +1,20 @@
 ---
 import Tag from "../Ui/Tag.astro";
 
-type FeatureProps = {
-  id: number;
-  title: string;
-  status: string[];
-  technos: string[];
-  description: string;
-  reason: string;
-  features: string[],
-  github: string;
-  image: string;
-  link: string;
-}
+import type { Project, Status, Techno } from "../../types/types";
 
 // convention typage Astro 
 interface Props {
-  project: FeatureProps;
+  project: Project;
   reversed?: boolean;
 }
 
 const { project, reversed } = Astro.props as Props;
-const { features, status, technos, github, link } = project;
+
+const status: Status[] = project.expand.status_id;
+const features: string[] = project.features;
+const technos: Techno[] = project.expand.techno_id;
+
 
 ---
 
@@ -34,7 +27,7 @@ const { features, status, technos, github, link } = project;
       <h3>{project.title}</h3>
       <ul class="flex gap-x-3">
         {status.map((tag) => (
-          <Tag title={tag} />
+          <Tag title={tag.title} />
         ))}
       </ul>
     </div>
@@ -55,15 +48,15 @@ const { features, status, technos, github, link } = project;
 
     <ul>
       {technos.map(techno => (
-        <Tag title={techno} />
+        <Tag title={techno.title} />
       ))}
     </ul>
 
     <div class="">
-      <a href={link} target="_blank">
+      <a href={project.image} target="_blank">
         <i class="fa-solid fa-arrow-up-right-from-square"></i>
         Voir le site</a>
-      <a href={github} target="_blank">
+      <a href={project.github} target="_blank">
         <i class="fa-brands fa-github"></i>
         Code source
       </a>

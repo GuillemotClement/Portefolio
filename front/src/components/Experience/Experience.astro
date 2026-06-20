@@ -3,9 +3,8 @@ import { getCollectionRecords  } from "../../services/pocketbase.service";
 import ExperienceCard from "./ExperienceCard.astro";
 import type {Experience} from "../../types/types"
 
-const experiences = await getCollectionRecords<Experience>('experience');
+const experiences = await getCollectionRecords<Experience>('experience',);
 
-console.log(experiences);
 
 ---
 

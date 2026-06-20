@@ -15,3 +15,43 @@ export type Experience = {
   title: string;
   updated: ISODateString;
 };
+
+export type Status = {
+  collectionId: string;
+  collectionName: string;
+  created: ISODateString;
+  id: string;
+  title: string;
+  updated: ISODateString;
+};
+
+export type Techno = {
+  collectionId: string;
+  collectionName: string;
+  created: ISODateString;
+  id: string;
+  image: string;
+  type: string;
+  title: string;
+  updated: ISODateString;
+};
+
+type ExpandProject = {
+  status_id: Status[];
+  techno_id: Techno[];
+};
+
+export type Project = {
+  collectionId: string;
+  collectionName: string;
+  created: ISODateString;
+  description: string;
+  expand: ExpandProject;
+  features: string[];
+  github: string;
+  image: string;
+  reason: string;
+  title: string;
+  url: string;
+  order: number;
+};

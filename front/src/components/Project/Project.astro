@@ -1,10 +1,13 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
 
-import { projects } from "../../data/projects";
+import { getExpandCollectionRecords } from "../../services/pocketbase.service";
+import type { Project } from "../../types/types"
+
+const projects = await getExpandCollectionRecords<Project>('project',  'techno_id,status_id');
+
 ---
-<div class="" id="project">
-<div class="border border-blue-500 container mx-auto">
+<div class="container mx-auto" id="project">
 
 	<h2>Projects</h2>
 	<div class="flex justify-between">
@@ -14,7 +17,6 @@ import { projects } from "../../data/projects";
 
 
 	{projects.map(project => (
-		<ProjectCard project={project} reversed={project.id % 2 === 1}/>
+		<ProjectCard project={project} reversed={project.order % 2 === 1}/>
 	))}
-</div>
 </div>
