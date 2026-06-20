@@ -21,30 +21,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      #   with:
-      #     ref: ${{ github.head.ref }}
-
-      # - name: Pretify code
-      #   uses: creyD/prettier_action@v4.6
-      #   with:
-      #     prettier_options: --write **/*.{ts, md}
-      #     only_changed: True
 
       - name: Setup Node.js
-        uses: actions/setup-node@24
+        uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
-          cache-dependency-path: front/pnpm-lock.yaml
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.15.0 # meme version que dans le package.json
 
       - name: Install dependancies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
+        working-directory: front
 
+      # check quality code
       - name: Run ESlint
-        run: npx eslint . --ext .ts,.astro
+        run: pnpm exec eslint . --ext .ts,.astro
+        working-directory: front
 
+      # check formate
       - name: Run Prettier --check
-        run: npx prettier --check
+        run: pnpm exec prettier --check .
+        working-directory: front
 
+      # build project
       - name: Build frontend
         run: pnpm run build
+        working-directory: front

@@ -14,4 +14,4 @@ export type Experience = {
   tasks: string[];
   title: string;
   updated: ISODateString;
-}
+};
