@@ -6,9 +6,8 @@ services:
     restart: unless-stopped
     expose:
       - "4321"
-    # environment:
-    #   PUBLIC_POCKETBASE_URL: ${PUBLIC_POCKETBASE_URL}
-    #   POCKETBASE_KEY: ${POCKETBASE_KEY}
+    environment:
+      API_URL: ${API_URL}
 
   pocketbase:
     build:
