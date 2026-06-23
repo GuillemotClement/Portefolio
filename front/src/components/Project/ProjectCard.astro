@@ -2,6 +2,7 @@
 import Tag from "../Ui/Tag.astro";
 
 import type { Project, Status, Techno } from "../../types/types";
+import { parseContent } from "../../utils/parse";
 
 // convention typage Astro 
 interface Props {
@@ -15,42 +16,42 @@ const status: Status[] = project.expand.status_id;
 const features: string[] = project.features;
 const technos: Techno[] = project.expand.techno_id;
 
-
 ---
 
-<div class={`border border-gray-300 my-3 flex ${reversed ? 'flex-row-reverse' : ''}`}>
-  <div class="flex-1">
-    <img src={project.image} alt={project.title}  />\
+<div class={`border border-gray-300 rounded-2xl flex ${reversed ? 'flex-row-reverse' : ''} mb-10 items-center bg-beige`}>
+
+  <div class="flex-1 border">
+    <div class="">
+      <p>{project.url}</p>
+    </div>
+    <img src={project.image} alt={project.title}  />
   </div>
-  <div class="flex-1">
-    <div class="flex justify-between">
-      <h3>{project.title}</h3>
-      <ul class="flex gap-x-3">
+
+  <div class="flex-1 border p-5">
+
+    <div class="flex justify-between border">
+      <h3 class="font-title text-2xl font-bold">{project.title}</h3>
+      <ul class="flex gap-x-5">
         {status.map((tag) => (
           <Tag title={tag.title} />
         ))}
       </ul>
     </div>
 
-    <p>{project.description}</p>
+    <p class="my-3">{parseContent(project.description)}</p>
 
-    <div class="">
-      <h4>Raisons</h4>
-      <p>{project.reason}</p>
-    </div>
-
-    <h4>Fonctionnalités</h4>
-    <ul>
+    <h4 class="text-gray-500 font-bold">Fonctionnalités</h4>
+    <ul class="list-disc ps-4 mb-3">
       {features.map((feature) => (
         <li>{feature}</li>
       ))}
     </ul>
 
-    <ul>
+    <div class="flex mb-3">
       {technos.map(techno => (
         <Tag title={techno.title} />
       ))}
-    </ul>
+    </div>
 
     <div class="">
       <a href={project.image} target="_blank">

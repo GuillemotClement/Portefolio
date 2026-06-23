@@ -1,7 +1,13 @@
 ---
-const {title} = Astro.props;
+
+interface Props {
+  title: string;
+}
+
+const {title} = Astro.props as Props;
+
 ---
 
-<div class="border py-2 px-2">
+<div class="border rounded-2xl px-2 py-1">
   {title}
 </div>

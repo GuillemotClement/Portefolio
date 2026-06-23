@@ -7,15 +7,15 @@ import type { Project } from "../../types/types"
 const projects = await getExpandCollectionRecords<Project>('project',  'techno_id,status_id');
 
 ---
-<div class="container mx-auto" id="project">
-
-	<h2>Projects</h2>
-	<div class="flex justify-between">
-		<h3>Sélection de projets</h3>
-		<p>Réalisations personelles & pédagogique</p>
+<div class="container-section" >
+	<div class="container-title">
+		<h2 class="subtitle-section mb-5" id="project">05 - Projects</h2>
+		<div class="flex justify-between">
+			<p class="title-section">Sélection de projets</p>
+			<p class="text-gray-500">Réalisations personelles & pédagogique</p>
+		</div>
 	</div>
-
-
+	
 	{projects.map(project => (
 		<ProjectCard project={project} reversed={project.order % 2 === 1}/>
 	))}
