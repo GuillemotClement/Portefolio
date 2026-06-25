@@ -1,17 +1,19 @@
 ---
-import { schools } from "../../data/school";
 import SchoolCard from "./SchoolCard.astro";
----
+import { getCollectionRecords } from "@/services/pocketbase.service";
+import type { School } from "../../types/types"
 
-<div class="" id="formation">
-    <div class="container mx-auto">
-        <div class="">
-            <div class="">Formation</div>
-            <data value="">Mon cursus</data>
-        </div>
-        <div class="">
+const schools = await getCollectionRecords<School>('school')
+
+---
+<div class="section" id="formation">
+    <div class="section-container">
+        <h2 class="section-title">Formations</h2>
+        <div class="divider"></div>
+        <div>
             {schools.map(school => ( 
                 <SchoolCard school={school} />
+                <div class="divider"></div>
             ))}
         </div>
     </div>

@@ -1,18 +1,31 @@
 ---
-const { school } = Astro.props;
+import type { School } from '@/types/types';
+import { getFormatedPeriode } from '@/utils/date';
+
+
+interface Props {
+  school: School
+}
+
+const { school } = Astro.props as Props;
+
+const periode = getFormatedPeriode(school.start_periode, school.end_periode);
+
 ---
 
-<div class="flex flex-col">
-  <div class="flex-1">
-    <p>{school.date}</p>
-    <div class="">
-      <img src={school.image} alt={school.title} height="100" width="100">
+<div class="flex flex-col md:flex-row gap-6 mb-5 items-center">
+  <div class="flex-1 flex items-center gap-5">
+    <div class="h-14 w-14 flex-shrink-0">
+      <img src={school.image} alt={school.title} class="w-full h-full object-contain" />
     </div>
+    <p class="periode">{periode}</p>
   </div>
 
   <div class="flex-1">
-    <p>{school.title}</p>
-    <p>{school.subtitle}</p>
-    <p>{school.city}</p>
+    <h3 class="h3">{school.title}</h3>
+    <div class="mt-1 text-gray-500">
+      <p>{school.subtitle}</p>
+      <p class="city">{school.city}</p>
+    </div>
   </div>
 </div>

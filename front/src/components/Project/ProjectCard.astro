@@ -1,69 +1,68 @@
 ---
 import Tag from "../Ui/Tag.astro";
 
-type FeatureProps = {
-  id: number;
-  title: string;
-  status: string[];
-  technos: string[];
-  description: string;
-  reason: string;
-  features: string[],
-  github: string;
-  image: string;
-  link: string;
-}
+import type { Project, Status, Techno } from "../../types/types";
+import { parseContent } from "../../utils/parse";
 
 // convention typage Astro 
 interface Props {
-  project: FeatureProps;
+  project: Project;
   reversed?: boolean;
 }
 
 const { project, reversed } = Astro.props as Props;
-const { features, status, technos, github, link } = project;
+
+const status: Status[] = project.expand.status_id;
+const features: string[] = project.features;
+const technos: Techno[] = project.expand.techno_id;
 
 ---
 
-<div class={`border border-gray-300 my-3 flex ${reversed ? 'flex-row-reverse' : ''}`}>
-  <div class="flex-1">
-    <img src={project.image} alt={project.title}  />\
+<div class={`card-surface flex flex-col md:flex-row ${reversed ? 'md:flex-row-reverse' : ''} mb-10 overflow-hidden hover:shadow-lg transition-shadow items-center`}>
+
+  <div class="flex-1 bg-gray-100 mockup-browser">
+    <div class="mockup-browser-toolbar">
+      {(project.isWebsite === true) && (
+        <div class="input">{project.url}</div>
+      )}
+    </div>
+    <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
   </div>
-  <div class="flex-1">
-    <div class="flex justify-between">
-      <h3>{project.title}</h3>
-      <ul class="flex gap-x-3">
+
+  <div class="flex-1 p-8">
+    <div class="flex justify-between items-start gap-3 mb-3">
+      <h3 class="font-title text-2xl font-bold">{project.title}</h3>
+      <ul class="flex flex-wrap gap-2 justify-end">
         {status.map((tag) => (
-          <Tag title={tag} />
+          <Tag title={tag.title} />
         ))}
       </ul>
     </div>
 
-    <p>{project.description}</p>
+    <p class="text-gray-600 mb-4">{parseContent(project.description)}</p>
 
-    <div class="">
-      <h4>Raisons</h4>
-      <p>{project.reason}</p>
-    </div>
-
-    <h4>Fonctionnalités</h4>
-    <ul>
+    <h4 class="font-technique text-xs uppercase text-gray-400 mb-2">Fonctionnalités</h4>
+    <ul class="list-disc ps-4 mb-4 text-gray-600 space-y-1">
       {features.map((feature) => (
         <li>{feature}</li>
       ))}
     </ul>
 
-    <ul>
+    <div class="flex flex-wrap gap-2 mb-5">
       {technos.map(techno => (
-        <Tag title={techno} />
+        <Tag title={techno.title} />
       ))}
-    </ul>
+    </div>
 
-    <div class="">
-      <a href={link} target="_blank">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        Voir le site</a>
-      <a href={github} target="_blank">
+    <div class="flex gap-5 font-technique text-sm">
+      {(project.isWebsite === true) && (
+        <a href={project.url} target="_blank" class="flex items-center gap-2 hover:text-accent">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Voir le site
+        </a>
+      )}
+
+      <a href={project.github} target="_blank" class="flex items-center gap-2 hover:text-accent">
         <i class="fa-brands fa-github"></i>
         Code source
       </a>
