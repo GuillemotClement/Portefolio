@@ -29,7 +29,7 @@
     </div>
 
 
-    <form class="card-surface p-8 space-y-4">
+    <form class="card-surface p-8 space-y-4" id="contactForm" method="POST">
         <div class="">
             <label for="name" class="block text-sm font-bold mb-1">Nom</label>
             <input id="name" name="name" type="text" placeholder="Votre nom" class="input w-full">
@@ -50,6 +50,8 @@
             <textarea id="message" name="message" placeholder="Votre message ..." class="textarea w-full h-32"></textarea>
         </div>
 
+        <input type="text" name="website" style="display: node;">
+
         <div class="flex justify-end gap-3 pt-2">
             <button type="reset" class="btn btn-ghost">Réinitialiser</button>
             <button type="submit" class="btn bg-accent text-white border-none hover:opacity-90">Envoyer le message</button>
@@ -57,3 +59,40 @@
     </form>
 </div>
 </div>
+
+<script>
+import { sendEmail } from "@/services/mail.service";
+import { date } from "astro/zod";
+
+interface FormContact {
+    email: string;
+    name: string;
+    subject: string;
+    message: string;
+    website: string;
+}
+
+const form = document.getElementById("contactForm") as HTMLFormElement;
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // protection spam simple
+    const honey = (document.querySelector('input[name="website"') as HTMLInputElement).value;
+    if(honey){
+        return;
+    }
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData) as unknown as FormContact;
+
+    const payload = {
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message
+    };
+
+    sendEmail(payload);
+})
+</script>

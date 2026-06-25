@@ -169,8 +169,6 @@ func sendEmail(w http.ResponseWriter, req *http.Request) {
 			Message: "failed to send message",
 		})
 	}
-
-	
 }
 
 func enableCors(w http.ResponseWriter) {
