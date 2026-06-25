@@ -4,20 +4,17 @@ import ExperienceCard from "./ExperienceCard.astro";
 import type {Experience} from "../../types/types"
 
 const experiences = await getCollectionRecords<Experience>('experience',);
-
-
 ---
 
-<div class="bg-beige" id="experience">
-    <div class="container mx-auto">
-        <h3>Parcours</h3>
-        <h2>Expérience professionnelle</h2>
-
-        <ul>
+<section class="section section-secondary" id="experience">
+    <div class="section-container">
+        <h2 class="section-title">Expériences</h2>
+        <div class="divider"></div>
+        <div>
             {experiences.map((experience) => (
                 <ExperienceCard experience={experience} />
+                <div class="divider"></div>
             ))}
-        </ul>
+        </div>
     </div>
-
-</div>
+</section>

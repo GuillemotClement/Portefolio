@@ -1,55 +1,58 @@
 ---
 
 ---
-<div class="bg-beige" id="contact">
-<div class="container mx-auto flex" >
+<div class="bg-beige py-20" id="contact">
+<div class="container mx-auto px-5 grid grid-cols-1 md:grid-cols-2 gap-12" >
 
     <div class="">
-        <h2>Contact</h2>
-        <h3>Travaillons ensemble</h3>
-        <p>
+        <h2 class="title-section mb-3">Contact</h2>
+        <p class="text-gray-600 mb-8">
             Une question, un projet ou une opportunité à partager ? Écrivez-moi via le formulaire, je réponds dans les meilleurs délais.
         </p>
-        <div class="">
-            <div class="bg-white">
-                <i class="fa-brands fa-linkedin"></i>
-                <p>Linkedin</p>
-                <a href="https://www.linkedin.com/in/cl%C3%A9ment-guillemot/" target="_blank">clément-guillemot</a>
-            </div>
+        <div class="flex gap-4">
+            <a href="https://www.linkedin.com/in/cl%C3%A9ment-guillemot/" target="_blank" class="card-surface flex items-center gap-3 px-5 py-4 hover:border-accent/40 transition-colors">
+                <i class="fa-brands fa-linkedin text-xl text-accent"></i>
+                <div class="">
+                    <p class="text-xs text-gray-400 font-technique uppercase">Linkedin</p>
+                    <p class="text-sm font-bold">clément-guillemot</p>
+                </div>
+            </a>
 
-            <div class="bg-white">
-                <i class="fa-brands fa-github"></i>
-                <p>GitHub</p>
-                <a href="https://github.com/GuillemotClement" target="_blank">GuillemotClement </a>
-            </div>
+            <a href="https://github.com/GuillemotClement" target="_blank" class="card-surface flex items-center gap-3 px-5 py-4 hover:border-accent/40 transition-colors">
+                <i class="fa-brands fa-github text-xl text-accent"></i>
+                <div class="">
+                    <p class="text-xs text-gray-400 font-technique uppercase">GitHub</p>
+                    <p class="text-sm font-bold">GuillemotClement</p>
+                </div>
+            </a>
         </div>
     </div>
 
 
-    <form class="border bg-white">
+    <form class="card-surface p-8 space-y-4">
         <div class="">
-            <label for="name">Nom</label>
-            <input id="name" name="name" type="text" placeholder="Votre nom">
+            <label for="name" class="block text-sm font-bold mb-1">Nom</label>
+            <input id="name" name="name" type="text" placeholder="Votre nom" class="input w-full">
         </div>
 
         <div class="">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="vous@email.com">
+            <label for="email" class="block text-sm font-bold mb-1">Email</label>
+            <input id="email" name="email" type="email" placeholder="vous@email.com" class="input w-full">
         </div>
 
         <div class="">
-            <label for="subject">Sujet</label>
-            <input id="subject" name="subject" placeholder="L'objet de votre message" type="text">
+            <label for="subject" class="block text-sm font-bold mb-1">Sujet</label>
+            <input id="subject" name="subject" placeholder="L'objet de votre message" type="text" class="input w-full">
         </div>
 
         <div class="">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Votre message ..."></textarea>
+            <label for="message" class="block text-sm font-bold mb-1">Message</label>
+            <textarea id="message" name="message" placeholder="Votre message ..." class="textarea w-full h-32"></textarea>
         </div>
 
-        <div class="">
-            <button type="reset">Réinitialiser</button>
-            <button type="submit">Envoyer le message</button>
+        <div class="flex justify-end gap-3 pt-2">
+            <button type="reset" class="btn btn-ghost">Réinitialiser</button>
+            <button type="submit" class="btn bg-accent text-white border-none hover:opacity-90">Envoyer le message</button>
         </div>
     </form>
 </div>

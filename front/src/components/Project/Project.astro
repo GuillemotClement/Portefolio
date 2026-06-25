@@ -8,12 +8,8 @@ const projects = await getExpandCollectionRecords<Project>('project',  'techno_i
 
 ---
 <div class="container-section" >
-	<div class="container-title">
-		<h2 class="subtitle-section mb-5" id="project">05 - Projects</h2>
-		<div class="flex justify-between">
-			<p class="title-section">Sélection de projets</p>
-			<p class="text-gray-500">Réalisations personelles & pédagogique</p>
-		</div>
+	<div class="mb-10">
+		<h2 class="title-section mb-0" id="project">Projects</h2>
 	</div>
 	
 	{projects.map(project => (

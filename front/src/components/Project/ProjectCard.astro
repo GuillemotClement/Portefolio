@@ -18,46 +18,51 @@ const technos: Techno[] = project.expand.techno_id;
 
 ---
 
-<div class={`border border-gray-300 rounded-2xl flex ${reversed ? 'flex-row-reverse' : ''} mb-10 items-center bg-beige`}>
+<div class={`card-surface flex flex-col md:flex-row ${reversed ? 'md:flex-row-reverse' : ''} mb-10 overflow-hidden hover:shadow-lg transition-shadow items-center`}>
 
-  <div class="flex-1 border">
-    <div class="">
-      <p>{project.url}</p>
+  <div class="flex-1 bg-gray-100 mockup-browser">
+    <div class="mockup-browser-toolbar">
+      {(project.isWebsite === true) && (
+        <div class="input">{project.url}</div>
+      )}
     </div>
-    <img src={project.image} alt={project.title}  />
+    <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
   </div>
 
-  <div class="flex-1 border p-5">
-
-    <div class="flex justify-between border">
+  <div class="flex-1 p-8">
+    <div class="flex justify-between items-start gap-3 mb-3">
       <h3 class="font-title text-2xl font-bold">{project.title}</h3>
-      <ul class="flex gap-x-5">
+      <ul class="flex flex-wrap gap-2 justify-end">
         {status.map((tag) => (
           <Tag title={tag.title} />
         ))}
       </ul>
     </div>
 
-    <p class="my-3">{parseContent(project.description)}</p>
+    <p class="text-gray-600 mb-4">{parseContent(project.description)}</p>
 
-    <h4 class="text-gray-500 font-bold">Fonctionnalités</h4>
-    <ul class="list-disc ps-4 mb-3">
+    <h4 class="font-technique text-xs uppercase text-gray-400 mb-2">Fonctionnalités</h4>
+    <ul class="list-disc ps-4 mb-4 text-gray-600 space-y-1">
       {features.map((feature) => (
         <li>{feature}</li>
       ))}
     </ul>
 
-    <div class="flex mb-3">
+    <div class="flex flex-wrap gap-2 mb-5">
       {technos.map(techno => (
         <Tag title={techno.title} />
       ))}
     </div>
 
-    <div class="">
-      <a href={project.image} target="_blank">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        Voir le site</a>
-      <a href={project.github} target="_blank">
+    <div class="flex gap-5 font-technique text-sm">
+      {(project.isWebsite === true) && (
+        <a href={project.url} target="_blank" class="flex items-center gap-2 hover:text-accent">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Voir le site
+        </a>
+      )}
+
+      <a href={project.github} target="_blank" class="flex items-center gap-2 hover:text-accent">
         <i class="fa-brands fa-github"></i>
         Code source
       </a>

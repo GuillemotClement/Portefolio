@@ -34,6 +34,7 @@ export type Techno = {
   type: string;
   title: string;
   updated: ISODateString;
+  isVisible: boolean;
 };
 
 type ExpandProject = {
@@ -54,4 +55,19 @@ export type Project = {
   title: string;
   url: string;
   order: number;
+  isWebsite: boolean;
+};
+
+export type School = {
+  city: string;
+  collectionId: string;
+  collectionName: string;
+  created: ISODateString;
+  end_periode: ISODateString;
+  id: string;
+  image: string;
+  start_periode: ISODateString;
+  subtitle: string;
+  title: string;
+  updated: ISODateString;
 };
