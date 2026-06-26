@@ -1,18 +1,39 @@
 ---
-import { backSkills, frontSkills, toolSkills } from "../../data/skills";
+import { getCollectionRecords } from "@/services/pocketbase.service";
 import SkillCol from "./SkillCol.astro";
+import type { Techno } from "../../types/types"
+const skills = await getCollectionRecords<Techno>('techno');
+
+const frontSkills = skills.filter(skill => {
+    if(skill.type == "frontend" && skill.isVisible){
+        return skill
+    }
+})
+
+const backSkills = skills.filter(skill => {
+    if(skill.type === "backend" && skill.isVisible){
+        return skill
+    }
+})
+
+const toolSkills = skills.filter(skill => {
+    if(skill.type === 'tools' && skill.isVisible){
+        return skill
+    }
+})
+
+console.log(skills);
 ---
 <div class="bg-beige py-20" id="skill">
-    <div class="container mx-auto">
+    <div class="container mx-auto px-5">
         <div class="mb-10">
-            <h2 class="text-accent uppercase mb-3 italic">Compétences</h2>
-            <p class="text-3xl">Ma stack technique</p>
+            <h2 class="title-section mb-0">Stack</h2>
         </div>
 
-        <div class="grid grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <SkillCol skills={frontSkills} title="Front-End"/>
             <SkillCol skills={backSkills} title="Back-End" />
-            <SkillCol skills={toolSkills} title="Outils" />
+            <SkillCol skills={toolSkills} title="Outils" /> 
         </div>
-    </div>    
+    </div>
 </div>

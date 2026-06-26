@@ -1,26 +1,20 @@
 ---
+import type { Techno } from '@/types/types';
 import SkillItem from './SkillItem.astro';
  
-export type SkillProps = {
-  id: number,
-  title: string;
-  logo: string;
-}
-
 interface Props {
-  skills: SkillProps[],
+  skills: Techno[],
   title: string;
 }
 
 const { skills, title } = Astro.props as Props;
 ---
 
-<div class="border-2 border-gray-200 bg-white rounded-2xl  p-5">
-  <h3 class="font-bold uppercase text-center">{title}</h3>
+<div class="card-surface p-6">
+  <h3 class="font-technique font-bold uppercase text-center text-sm tracking-widest text-accent mb-4">{title}</h3>
   <ul>
     {skills.map(skill => (
       <SkillItem skill={skill} />
     ))}
   </ul>
-
 </div>

@@ -13,23 +13,24 @@ const periode = getFormatedPeriode(experience.startPeriode, experience.endPeriod
 
 ---
 
-<div class="flex">
-  <div class="flex-1">
-    <p>{experience.enterprise}</p>
-    <p>{periode}</p>
-    <p>{experience.city}</p>
+<div class="flex flex-col md:flex-row gap-8 items-start md:items-center mb-5">
+  <div class="flex-1 flex items-center justify-between gap-6">
     <div class="">
-      <img src={experience.image} alt={experience.enterprise}>
+      <h3 class="h3">{experience.enterprise}</h3>
+      <p class="periode">{periode}</p>
+      <p class="city">{experience.city}</p>
+    </div>
+    <div class="h-16 w-16 flex-shrink-0 flex items-center">
+      <img src={experience.image} alt={experience.enterprise} class="w-full h-full object-contain">
     </div>
   </div>
 
   <div class="flex-1">
-    <h3>{experience.title}</h3>
-    <ul>
-      {experience.tasks.map(task => ( 
+    <h3 class="h3">{experience.title}</h3>
+    <ul class="list-disc ps-4 text-gray-600 space-y-1">
+      {experience.tasks.map(task => (
         <li>{task}</li>
       ))}
-      <li></li>
     </ul>
   </div>
 </div>

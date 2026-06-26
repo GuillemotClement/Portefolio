@@ -22,5 +22,19 @@ services:
       # - ./pb_migrations:/pb/pb_migrations
       # - ./pb_hooks:/pb/pb_hooks
 
+  mailer:
+    build:
+      context: ./mailer
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "8085"
+    environment:
+      BREVO_API_KEY: ${BREVO_API_KEY}
+      RECEIVER_EMAIL: ${RECEIVER_EMAIL}
+      PORT: ":8085"
+    depends_on:
+      - frontend
+
 volumes:
   pb_data:
