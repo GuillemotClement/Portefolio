@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const payload: Payload = await request.json();
 
-    const mailerUrl = process.env.MAILER_URL || "http://mailer:8085";
+    const mailerUrl = (process.env.MAILER_URL || "http://mailer:8085").replace(/\/+$/, "");
 
     const response = await fetch(`${mailerUrl}/send-email`, {
       method: "POST",
