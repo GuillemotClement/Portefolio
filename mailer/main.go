@@ -70,7 +70,7 @@ func main() {
 	// // http.HandleFunc("OPTIONS /send-email", optionsHandler)
 	// http.HandleFunc("POST /send-email", sendEmail)
 
-	fmt.Println("Katmail is listening")
+	fmt.Println("Katmail is listening on " + PORT)
 
 
 	server := &http.Server{
@@ -79,11 +79,10 @@ func main() {
 		ReadTimeout:  15,
 		WriteTimeout: 15,
 		IdleTimeout:  60,
+		MaxHeaderBytes: 1 << 20,
 	}
 
-	if err := server.ListenAndServe(); err != nil {
-		log.Fatal(err)
-	}
+	log.Fatal(server.ListenAndServe())
 
 	// start server
 	// http.ListenAndServe(PORT, corsMiddleware(http.DefaultServeMux))
@@ -94,6 +93,10 @@ func healthCheck(w http.ResponseWriter, req *http.Request) {
 }
 
 func sendEmail(w http.ResponseWriter, req *http.Request) {
+	req.Body = http.MaxBytesReader(w, req.Body, MAX_BODY_SIZE)
+
+	log.Printf("Incoming request: Method=%s, Content-Type=%s, RemoteAddr=%s", 
+		req.Method, req.Header.Get("Content-Type"), req.RemoteAddr)
 
 	// enableCors(w)
   log.Printf("Method: %s, Content-Type: %s", req.Method, req.Header.Get("Content-Type"))
@@ -106,7 +109,7 @@ func sendEmail(w http.ResponseWriter, req *http.Request) {
 	
 	receiver_email := os.Getenv("RECEIVER_EMAIL")
 	if receiver_email == "" {
-		log.Println("email receiver is not set")
+		log.Println("RECEIVER_EMAIL is not set")
 		http.Error(w, "internal error", http.StatusInternalServerError)
 		return
 	}
@@ -115,6 +118,7 @@ func sendEmail(w http.ResponseWriter, req *http.Request) {
 	// decode JSON from request body
 	err := json.NewDecoder(req.Body).Decode(&data)
 	if err != nil {
+		log.Printf("JSON decode error: %v", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -125,6 +129,8 @@ func sendEmail(w http.ResponseWriter, req *http.Request) {
 	subject := strings.TrimSpace(data.Subject)
 	content := strings.TrimSpace(data.Content)
 	name := strings.TrimSpace(data.Name)
+
+	log.Printf("Processing email from: %s, subject: %s", email, subject)
 
 	// check data 
 	if email == "" {
@@ -173,9 +179,10 @@ func sendEmail(w http.ResponseWriter, req *http.Request) {
 	reqBrevo.Header.Add("api-key", brevo_api_key)
 	reqBrevo.Header.Add("Content-Type", "application/json")
 
+	log.Println("Sending request to Brevo...")
 	res, err := http.DefaultClient.Do(reqBrevo)
 	if err != nil {
-		log.Println("failed to defer request to Brevo")
+		log.Printf("Error calling Brevo: %v", err)
 		http.Error(w, "internal error", http.StatusInternalServerError)
 		return
 	}
