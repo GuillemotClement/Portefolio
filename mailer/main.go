@@ -47,10 +47,10 @@ func main() {
 	// 	log.Fatal("Error loading .env file")
 	// }
 	_ = godotenv.Load()
-	
+
 	// routes
 	http.HandleFunc("GET /", healthCheck)
-	http.HandleFunc("OPTIONS /send-email", optionsHandler)
+	// http.HandleFunc("OPTIONS /send-email", optionsHandler)
 	http.HandleFunc("POST /send-email", sendEmail)
 
 	// start server
@@ -193,7 +193,7 @@ func corsMiddleware(next http.Handler) http.Handler {
   })
 }
 
-func optionsHandler(w http.ResponseWriter, req *http.Request) {
-  // Les headers sont déjà définis par le middleware
-  w.WriteHeader(http.StatusOK)
-}
+// func optionsHandler(w http.ResponseWriter, req *http.Request) {
+//   // Les headers sont déjà définis par le middleware
+//   w.WriteHeader(http.StatusOK)
+// }
