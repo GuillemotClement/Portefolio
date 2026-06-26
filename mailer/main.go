@@ -42,11 +42,12 @@ type To struct {
 
 func main() {
 	// load env variable
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
+	_ = godotenv.Load()
+	
 	// routes
 	http.HandleFunc("GET /", healthCheck)
 	http.HandleFunc("OPTIONS /send-email", optionsHandler)
