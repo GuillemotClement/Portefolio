@@ -48,14 +48,45 @@ func main() {
 	// }
 	_ = godotenv.Load()
 
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+		if req.Method != "GET" {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		healthCheck(w, req)
+	})
+	
+	mux.HandleFunc("/send-email", func(w http.ResponseWriter, req *http.Request) {
+		if req.Method != "POST" {
+			http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		sendEmail(w, req)
+	})
+
 	// routes
-	http.HandleFunc("GET /", healthCheck)
-	// http.HandleFunc("OPTIONS /send-email", optionsHandler)
-	http.HandleFunc("POST /send-email", sendEmail)
+	// http.HandleFunc("GET /", healthCheck)
+	// // http.HandleFunc("OPTIONS /send-email", optionsHandler)
+	// http.HandleFunc("POST /send-email", sendEmail)
+
+	fmt.Println("Katmail is listening")
+
+
+	server := &http.Server{
+		Addr:         PORT,
+		Handler:      corsMiddleware(mux),
+		ReadTimeout:  15,
+		WriteTimeout: 15,
+		IdleTimeout:  60,
+	}
+
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatal(err)
+	}
 
 	// start server
-	fmt.Println("Katmail is listening")
-	http.ListenAndServe(PORT, corsMiddleware(http.DefaultServeMux))
+	// http.ListenAndServe(PORT, corsMiddleware(http.DefaultServeMux))
 }
 
 func healthCheck(w http.ResponseWriter, req *http.Request) {
