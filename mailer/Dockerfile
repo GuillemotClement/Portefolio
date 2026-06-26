@@ -1,14 +1,13 @@
 # Build stage
-FROM golang:1.22-alpine AS builder
+FROM golang:1.26-alpine AS builder
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
-RUN go mod download
-
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o mailer .
+RUN go mod download && \
+    go mod verify && \
+    CGO_ENABLED=0 GOOS=linux go build -o mailer .
 
 # Runtime stage
 FROM alpine:latest
