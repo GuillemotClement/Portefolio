@@ -14,7 +14,7 @@ export default defineConfig({
       GITHUB_KEY: envField.string({ context: "server", access: "secret" }),
       API_URL: envField.string({ context: "server", access: "secret" }),
       POCKETBASE_KEY: envField.string({ context: "server", access: "secret" }),
-      MAIL_URL: envField.string({ context: "server", access: "secret" }),
+      MAILER_URL: envField.string({ context: "server", access: "secret" }),
     },
   },
   output: "server",
