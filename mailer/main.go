@@ -93,7 +93,7 @@ func healthCheck(w http.ResponseWriter, req *http.Request) {
 }
 
 func sendEmail(w http.ResponseWriter, req *http.Request) {
-	req.Body = http.MaxBytesReader(w, req.Body, MAX_BODY_SIZE)
+	// req.Body = http.MaxBytesReader(w, req.Body, MAX_BODY_SIZE)
 
 	log.Printf("Incoming request: Method=%s, Content-Type=%s, RemoteAddr=%s", 
 		req.Method, req.Header.Get("Content-Type"), req.RemoteAddr)
