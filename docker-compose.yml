@@ -9,6 +9,8 @@ services:
     environment:
       API_URL: ${API_URL}
       MAILER_URL: ${MAILER_URL}
+    depends_on:
+      - mailer
 
   pocketbase:
     build:
@@ -34,8 +36,6 @@ services:
       BREVO_API_KEY: ${BREVO_API_KEY}
       RECEIVER_EMAIL: ${RECEIVER_EMAIL}
       PORT: ":8085"
-    depends_on:
-      - frontend
 
 volumes:
   pb_data:

@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -76,9 +77,9 @@ func main() {
 	server := &http.Server{
 		Addr:         PORT,
 		Handler:      corsMiddleware(mux),
-		ReadTimeout:  15,
-		WriteTimeout: 15,
-		IdleTimeout:  60,
+		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 15 * time.Second,
+		IdleTimeout:  60 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
