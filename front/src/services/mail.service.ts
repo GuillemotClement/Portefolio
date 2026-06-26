@@ -10,9 +10,11 @@ export interface MailResponse {
   message: string;
 }
 
+const mailerURL = import.meta.MAIL_URL || "http://localhost:8085/send-email";
+
 export const sendEmail = async (payload: Payload): Promise<MailResponse> => {
   try {
-    const response = await fetch("http://localhost:8085/send-email", {
+    const response = await fetch(mailerURL, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
