@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -48,11 +49,12 @@ func main() {
 
 	// routes
 	http.HandleFunc("GET /", healthCheck)
+	http.HandleFunc("OPTIONS /send-email", optionsHandler)
 	http.HandleFunc("POST /send-email", sendEmail)
 
 	// start server
 	fmt.Println("Katmail is listening")
-	http.ListenAndServe(PORT, nil)
+	http.ListenAndServe(PORT, corsMiddleware(http.DefaultServeMux))
 }
 
 func healthCheck(w http.ResponseWriter, req *http.Request) {
@@ -61,8 +63,8 @@ func healthCheck(w http.ResponseWriter, req *http.Request) {
 
 func sendEmail(w http.ResponseWriter, req *http.Request) {
 
-	enableCors(w)
-
+	// enableCors(w)
+  log.Printf("Method: %s, Content-Type: %s", req.Method, req.Header.Get("Content-Type"))
 	brevo_api_key := os.Getenv("BREVO_API_KEY")
 	if brevo_api_key == "" {
 		log.Println("BREVO_API_KEY is not set")
@@ -139,45 +141,58 @@ func sendEmail(w http.ResponseWriter, req *http.Request) {
 	reqBrevo.Header.Add("api-key", brevo_api_key)
 	reqBrevo.Header.Add("Content-Type", "application/json")
 
-	// TEMP: pour pas peter la dispo 
+	res, err := http.DefaultClient.Do(reqBrevo)
+	if err != nil {
+		log.Println("failed to defer request to Brevo")
+		http.Error(w, "internal error", http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
 
-	if IS_READY {
-		// fais la requete 
-		// res, err := http.DefaultClient.Do(reqBrevo)
-		// if err != nil {
-		// 	log.Println("failed to defer request to Brevo")
-		// 	http.Error(w, "internal error", http.StatusInternalServerError)
-		// 	return
-		// }
-		// defer res.Body.Close()
+	resBody, _ := io.ReadAll(res.Body)
 
-		// resBody, _ := io.ReadAll(res.Body)
-	} 
+	log.Printf("Brevo response status: %d", res.StatusCode)
+  log.Printf("Brevo response body: %s", string(resBody))
 
 	w.Header().Set("Content-Type", "application/json")
 
-	success := false 
-
-	if success { 
-		json.NewEncoder(w).Encode(Response{
-			Success: true,
-			Message: "email sent",
-		})
-	} else {
-		json.NewEncoder(w).Encode(Response{
-			Success: false,
-			Message: "failed to send message",
-		})
-	}
-}
-
-func enableCors(w http.ResponseWriter) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET POST")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type-Authorization")
+	success := res.StatusCode >= 200 && res.StatusCode < 300
+  if success {
+    json.NewEncoder(w).Encode(Response{
+      Success: true,
+      Message: "email sent",
+    })
+  } else {
+    json.NewEncoder(w).Encode(Response{
+      Success: false,
+      Message: "failed to send message",
+    })
+  }
 }
 
 type Response struct {
 	Success bool `json:"success"`
 	Message string `json:"message"`
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+  return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+    w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    w.Header().Set("Access-Control-Max-Age", "3600")
+
+    // Répond immédiatement aux requêtes preflight
+    if req.Method == "OPTIONS" {
+      w.WriteHeader(http.StatusOK)
+      return
+    }
+
+    next.ServeHTTP(w, req)
+  })
+}
+
+func optionsHandler(w http.ResponseWriter, req *http.Request) {
+  // Les headers sont déjà définis par le middleware
+  w.WriteHeader(http.StatusOK)
 }

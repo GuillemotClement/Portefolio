@@ -2,27 +2,38 @@ interface Payload {
   name: string;
   email: string;
   subject: string;
+  content: string;
+}
+
+export interface MailResponse {
+  success: boolean;
   message: string;
 }
 
-export const sendEmail = async (payload: Payload) => {
+export const sendEmail = async (payload: Payload): Promise<MailResponse> => {
   try {
-    const response = await fetch("http://localhost:8085", {
+    const response = await fetch("http://localhost:8085/send-email", {
       method: "POST",
-      body: new URLSearchParams(payload),
+      body: JSON.stringify(payload),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
     });
 
+    const data: MailResponse = await response.json();
+
     if (!response.ok) {
-      throw new Error("Serveur is down");
+      return {
+        success: false,
+        message: data.message || "Erreur lors de l'envoi",
+      };
     }
-
-    const data = await response.json();
-
-    console.log(data);
+    return data;
   } catch (e) {
     console.error(e);
+    return {
+      success: false,
+      message: "Erreur de connexion au serveur",
+    };
   }
 };

@@ -47,14 +47,17 @@
 
         <div class="">
             <label for="message" class="block text-sm font-bold mb-1">Message</label>
-            <textarea id="message" name="message" placeholder="Votre message ..." class="textarea w-full h-32"></textarea>
+            <textarea id="message" name="content" placeholder="Votre message ..." class="textarea w-full h-32"></textarea>
         </div>
 
         <input type="text" name="website" style="display: node;">
 
-        <div class="flex justify-end gap-3 pt-2">
+        <div  id="notification" class="hidden">
+        </div>
+
+        <div class="flex justify-end gap-3">
             <button type="reset" class="btn btn-ghost">Réinitialiser</button>
-            <button type="submit" class="btn bg-accent text-white border-none hover:opacity-90">Envoyer le message</button>
+            <button type="submit" class="btn bg-accent text-white border-none hover:opacity-90" id="submitButton">Envoyer le message</button>
         </div>
     </form>
 </div>
@@ -62,20 +65,28 @@
 
 <script>
 import { sendEmail } from "@/services/mail.service";
-import { date } from "astro/zod";
+import type {MailResponse} from "../services/mail.service"; 
 
 interface FormContact {
     email: string;
     name: string;
     subject: string;
-    message: string;
+    content: string;
     website: string;
 }
 
+
 const form = document.getElementById("contactForm") as HTMLFormElement;
+const submitButton = document.getElementById("submitButton") as HTMLButtonElement;
+const containerNotification = document.getElementById("notification") as HTMLDivElement;
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Envoi en cours...";
+
+    containerNotification.classList.add('hidden');
 
     // protection spam simple
     const honey = (document.querySelector('input[name="website"') as HTMLInputElement).value;
@@ -90,9 +101,30 @@ form.addEventListener('submit', async (e) => {
         name: data.name,
         email: data.email,
         subject: data.subject,
-        message: data.message
+        content: data.content
     };
 
-    sendEmail(payload);
+    const result: MailResponse = await sendEmail(payload);
+
+    submitButton.disabled = false;
+    submitButton.textContent = "Envoyer le message";
+
+    containerNotification.classList.remove('hidden');
+
+    if(result.success){
+        containerNotification.className = "mt-4 p-4 rounded-lg bg-green-100 border border-green-400 text-green-700";
+        containerNotification.textContent = "Message envoyé avec succès !";
+        form.reset();
+
+        // retire la notif après 5 secondes
+        setTimeout(() => {
+            containerNotification.classList.add("hidden");
+        }, 5000)
+    }else{
+        containerNotification.className = "mt-4 p-4 rounded-lg bg-red-100 border border-red-400 text-red-700"
+        containerNotification.textContent = "Echec de l'envoie du message. Reessayer plus tard";
+    }
 })
+
+
 </script>
