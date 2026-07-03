@@ -20,7 +20,7 @@
     "@octokit/core": "^7.0.6",
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^6.4.8",
-    "daisyui": "^5.5.23",
+    "daisyui": "^5.6.10",
     "he": "^1.2.0",
     "html-to-text": "^10.0.0",
     "pocketbase": "^0.27.0",
