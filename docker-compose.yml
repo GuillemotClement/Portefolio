@@ -4,13 +4,19 @@ services:
       context: ./front
       dockerfile: Dockerfile
     restart: unless-stopped
-    expose:
-      - "4321"
+    ports:
+      - "4321:4321"
     environment:
+      GITHUB_KEY: ${GITHUB_KEY}
+      POCKETBASE_KEY: ${POCKETBASE_KEY}
       API_URL: ${API_URL}
       MAILER_URL: ${MAILER_URL}
     depends_on:
       - mailer
+    command: ["pnpm", "dev", "--host", "0.0.0.0", "--port", "4321"]
+    volumes:
+      - ./front:/app
+      - /app/node_modules
 
   pocketbase:
     build:
