@@ -11,6 +11,9 @@ importers:
       '@astrojs/node':
         specifier: ^10.1.4
         version: 10.1.4(astro@6.4.8(@types/node@26.0.1)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0))
+      '@lucide/astro':
+        specifier: ^1.61.0
+        version: 1.61.0(astro@6.4.8(@types/node@26.0.1)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0))
       '@octokit/core':
         specifier: ^7.0.6
         version: 7.0.6
@@ -505,6 +508,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@lucide/astro@1.61.0':
+    resolution: {integrity: sha512-XoFZGoHjYtnDTuOQ4b105IO+WUCh8rzitIgBIrkOcdC1PRmsvLx+fwnrCRHiZ1JfbA36r/jAMxQL/HeyRqKJjQ==}
+    peerDependencies:
+      astro: ^4 || ^5 || ^6 || ^7
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2649,6 +2657,10 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@lucide/astro@1.61.0(astro@6.4.8(@types/node@26.0.1)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0))':
+    dependencies:
+      astro: 6.4.8(@types/node@26.0.1)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.0)
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
