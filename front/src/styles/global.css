@@ -20,6 +20,21 @@
 }
 
 @layer components {
+  /* Style pour le title de chaque section */
+  .sectionTitle {
+    @apply text-6xl font-bold;
+  }
+  /* Style pour couleur secondaire dans le titre */
+  .titleSecondary {
+    @apply text-primary;
+  }
+
+  /* style pour le container dans le section */
+  .sectionContainer {
+    @apply container mx-auto;
+  }
+
+  /*============================================== OLD==================================== */
   .section {
     @apply py-20;
   }
