@@ -7,7 +7,6 @@ services:
     ports:
       - "4321:4321"
     environment:
-      GITHUB_KEY: ${GITHUB_KEY}
       MAILER_URL: ${MAILER_URL}
     depends_on:
       - mailer

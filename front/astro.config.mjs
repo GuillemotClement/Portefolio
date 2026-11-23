@@ -17,7 +17,6 @@ export default defineConfig({
   },
   env: {
     schema: {
-      GITHUB_KEY: envField.string({ context: "server", access: "secret" }),
       MAILER_URL: envField.string({ context: "server", access: "secret" }),
     },
   },

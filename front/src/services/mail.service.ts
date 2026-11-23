@@ -10,8 +10,6 @@ export interface MailResponse {
   message: string;
 }
 
-// const mailerURL = import.meta.MAILER_URL || "http://localhost:8085/send-email";
-
 export const sendEmail = async (payload: Payload): Promise<MailResponse> => {
   try {
     const response = await fetch("/api/send-email", {

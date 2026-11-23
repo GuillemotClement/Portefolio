@@ -1,8 +1,8 @@
-FROM node:lts-alpine as runtime
+FROM node:26-alpine AS runtime
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
+RUN npm install -g pnpm@10.15.0
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
