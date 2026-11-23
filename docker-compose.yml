@@ -8,8 +8,6 @@ services:
       - "4321:4321"
     environment:
       GITHUB_KEY: ${GITHUB_KEY}
-      POCKETBASE_KEY: ${POCKETBASE_KEY}
-      API_URL: ${API_URL}
       MAILER_URL: ${MAILER_URL}
     depends_on:
       - mailer
@@ -17,19 +15,6 @@ services:
     volumes:
       - ./front:/app
       - /app/node_modules
-
-  pocketbase:
-    build:
-      context: ./pocketbase
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    ports:
-      - "8099:8080"
-    volumes:
-      - pb_data:/pb/pb_data
-      # optionnel si tu veux garder tes migrations/hooks en local
-      # - ./pb_migrations:/pb/pb_migrations
-      # - ./pb_hooks:/pb/pb_hooks
 
   mailer:
     build:
@@ -42,6 +27,3 @@ services:
       BREVO_API_KEY: ${BREVO_API_KEY}
       RECEIVER_EMAIL: ${RECEIVER_EMAIL}
       PORT: ":8085"
-
-volumes:
-  pb_data:

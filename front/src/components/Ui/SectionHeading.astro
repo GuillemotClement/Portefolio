@@ -1,0 +1,54 @@
+---
+interface Props {
+  number: string;
+  label: string;
+  dark?: boolean;
+  stacked?: boolean;
+  // Supprime la marge basse (quand le contenu suit dans la même colonne)
+  tight?: boolean;
+}
+
+const { number, label, dark = false, stacked = false, tight = false } = Astro.props;
+const hasDescription = Astro.slots.has("default");
+---
+
+<div
+  class:list={[
+    "grid items-start gap-6",
+    tight ? "mb-0" : "mb-14",
+    !stacked && "md:grid-cols-[1fr_2fr] md:gap-8",
+  ]}
+>
+  <div>
+    <span
+      class:list={[
+        "mb-2.5 flex items-center gap-3 text-[13px] font-bold tracking-[.12em] uppercase",
+        dark ? "text-on-night-muted" : "text-ink-muted",
+      ]}
+    >
+      <span
+        class:list={[
+          "text-[28px] tracking-normal",
+          dark ? "num-outline-lime" : "num-outline",
+        ]}
+        aria-hidden="true">{number}</span
+      >
+      {label}
+    </span>
+    <h2 class="text-[clamp(30px,4.4vw,46px)]"><slot name="title" /></h2>
+  </div>
+  {
+    hasDescription && (
+      <p
+        class:list={[
+          "max-w-[52ch]",
+          // Décale le texte de la hauteur du label (28px + mb-2.5) pour l'aligner sur le h2
+          !stacked && "md:pt-[38px]",
+          dark ? "text-on-night-muted" : "text-ink-muted",
+        ]}
+      >
+        <slot />
+      </p>
+    )
+  }
+</div>

@@ -1,73 +1,69 @@
-type ISODateString = string;
+// Types des données du portfolio (fichiers de src/data)
 
-export type Experience = {
-  city: string;
-  collectionId: string;
-  collectionName: string;
-  created: ISODateString;
-  endPeriode: ISODateString;
-  enterprise: string;
-  id: string;
-  image: string;
-  order: number;
-  startPeriode: ISODateString;
-  tasks: string[];
-  title: string;
-  updated: ISODateString;
-};
-
-export type Status = {
-  collectionId: string;
-  collectionName: string;
-  created: ISODateString;
-  id: string;
-  title: string;
-  updated: ISODateString;
-};
-
-export type Techno = {
-  collectionId: string;
-  collectionName: string;
-  created: ISODateString;
-  id: string;
-  image: string;
-  type: string;
-  title: string;
-  updated: ISODateString;
-  isVisible: boolean;
-};
-
-type ExpandProject = {
-  status_id: Status[];
-  techno_id: Techno[];
-};
+export type ProjectStatus =
+  | "prod"
+  | "dev"
+  | "finish"
+  | "perso"
+  | "pedagogique"
+  | "prive"
+  | "alternance";
 
 export type Project = {
-  collectionId: string;
-  collectionName: string;
-  created: ISODateString;
-  description: string;
-  expand: ExpandProject;
-  features: string[];
-  github: string;
-  image: string;
-  reason: string;
   title: string;
-  url: string;
-  order: number;
-  isWebsite: boolean;
+  status: ProjectStatus[];
+  technos: string[];
+  description: string;
+  reason?: string;
+  features?: string[];
+  // Grands sujets traités, affichés en clair (à la place des fonctionnalités)
+  themes?: string[];
+  github?: string;
+  url?: string;
+  // Texte affiché à la place des liens quand il n'y a ni site ni dépôt
+  linkNote?: string;
+  illustration: ProjectIllustrationKind;
+};
+
+export type ProjectIllustrationKind =
+  | "books"
+  | "running"
+  | "home"
+  | "radio"
+  | "dashboard"
+  | "erp";
+
+export type Experience = {
+  title: string;
+  enterprise: string;
+  date: string;
+  city: string;
+  tasks: string[];
+  // Affiche le badge « Reconversion »
+  isPivot?: boolean;
 };
 
 export type School = {
-  city: string;
-  collectionId: string;
-  collectionName: string;
-  created: ISODateString;
-  end_periode: ISODateString;
-  id: string;
-  image: string;
-  start_periode: ISODateString;
-  subtitle: string;
   title: string;
-  updated: ISODateString;
+  subtitle: string;
+  city: string;
+  date: string;
+  // Badge affiché sur les formations mises en avant (ex. « Bac+3/4 »)
+  level?: string;
+  // Formation affichée en grande carte plutôt qu'en ligne compacte
+  featured?: boolean;
+  // Technologies apprises pendant la formation (affichées sur les grandes cartes)
+  skills?: string[];
+};
+
+export type Skill = {
+  title: string;
+  logo?: string;
+  // Affiche le badge « en cours » et le contour citron
+  isLearning?: boolean;
+};
+
+export type SkillGroup = {
+  title: string;
+  skills: Skill[];
 };

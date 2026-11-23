@@ -1,130 +1,144 @@
 ---
+import SectionHeading from "./Ui/SectionHeading.astro";
+import CtaButton from "./Ui/CtaButton.astro";
+import { site } from "@/data/site";
 
+const links = [
+  { href: site.linkedin, label: "LinkedIn", value: site.linkedinLabel, icon: "→", external: true },
+  { href: site.github, label: "GitHub", value: site.githubLabel, icon: "→", external: true },
+  { href: site.cv, label: "CV", value: "Télécharger en PDF", icon: "↓", external: false },
+];
 ---
-<div class="bg-beige py-20" id="contact">
-<div class="container mx-auto px-5 grid grid-cols-1 md:grid-cols-2 gap-12" >
 
-    <div class="">
-        <h2 class="title-section mb-3">Contact</h2>
-        <p class="text-gray-600 mb-8">
-            Une question, un projet ou une opportunité à partager ? Écrivez-moi via le formulaire, je réponds dans les meilleurs délais.
-        </p>
-        <div class="flex gap-4">
-            <a href="https://www.linkedin.com/in/cl%C3%A9ment-guillemot/" target="_blank" class="card-surface flex items-center gap-3 px-5 py-4 hover:border-accent/40 transition-colors">
-                <i class="fa-brands fa-linkedin text-xl text-accent"></i>
-                <div class="">
-                    <p class="text-xs text-gray-400 font-technique uppercase">Linkedin</p>
-                    <p class="text-sm font-bold">clément-guillemot</p>
-                </div>
-            </a>
+<section id="contact" class="py-16 md:py-24">
+  <div class="container-page grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+    <div>
+      <SectionHeading number="06" label="Contact" stacked>
+        <Fragment slot="title">Parlons de <span class="mark">votre équipe</span>.</Fragment>
+        Vous recrutez un développeur full-stack ou back-end ? Écrivez-moi, je
+        réponds sous 48 h.
+      </SectionHeading>
 
-            <a href="https://github.com/GuillemotClement" target="_blank" class="card-surface flex items-center gap-3 px-5 py-4 hover:border-accent/40 transition-colors">
-                <i class="fa-brands fa-github text-xl text-accent"></i>
-                <div class="">
-                    <p class="text-xs text-gray-400 font-technique uppercase">GitHub</p>
-                    <p class="text-sm font-bold">GuillemotClement</p>
-                </div>
+      <ul class="-mt-6 grid gap-3">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              download={link.external ? undefined : site.cvFileName}
+              class="flex items-center justify-between rounded-lg border border-line bg-white px-5 py-4 no-underline transition-[border-color,box-shadow] duration-150 hover:border-ink hover:shadow-[4px_4px_0_var(--color-lime)]"
+            >
+              <span>
+                <small class="block text-xs tracking-widest text-ink-muted uppercase">{link.label}</small>
+                <b>{link.value}</b>
+              </span>
+              <span aria-hidden="true">{link.icon}</span>
             </a>
-        </div>
+          </li>
+        ))}
+      </ul>
     </div>
 
-
-    <form class="card-surface p-8 space-y-4" id="contactForm" method="POST">
-        <div class="">
-            <label for="name" class="block text-sm font-bold mb-1">Nom</label>
-            <input id="name" name="name" type="text" placeholder="Votre nom" class="input w-full">
+    <form
+      id="contactForm"
+      method="POST"
+      class="grid gap-4.5 self-start rounded-[10px] border border-line bg-white p-7"
+    >
+      <div class="grid gap-4.5 sm:grid-cols-2">
+        <div>
+          <label for="name" class="mb-1.5 block text-sm font-bold">Nom</label>
+          <input id="name" name="name" type="text" autocomplete="name" required placeholder="Marie Dupont" class="field" />
         </div>
-
-        <div class="">
-            <label for="email" class="block text-sm font-bold mb-1">Email</label>
-            <input id="email" name="email" type="email" placeholder="vous@email.com" class="input w-full">
+        <div>
+          <label for="email" class="mb-1.5 block text-sm font-bold">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder="marie@entreprise.fr" class="field" />
         </div>
+      </div>
 
-        <div class="">
-            <label for="subject" class="block text-sm font-bold mb-1">Sujet</label>
-            <input id="subject" name="subject" placeholder="L'objet de votre message" type="text" class="input w-full">
-        </div>
+      <div>
+        <label for="subject" class="mb-1.5 block text-sm font-bold">Sujet</label>
+        <input id="subject" name="subject" type="text" required placeholder="Poste de développeur back-end" class="field" />
+      </div>
 
-        <div class="">
-            <label for="message" class="block text-sm font-bold mb-1">Message</label>
-            <textarea id="message" name="content" placeholder="Votre message ..." class="textarea w-full h-32"></textarea>
-        </div>
+      <div>
+        <label for="message" class="mb-1.5 block text-sm font-bold">Message</label>
+        <textarea id="message" name="content" required placeholder="Présentez le poste ou votre projet" class="field min-h-36 resize-y"></textarea>
+      </div>
 
-        <input type="text" name="website" style="display: node;">
+      <!-- Honeypot anti-spam : invisible pour les humains -->
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label for="website">Site web</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
 
-        <div  id="notification" class="hidden">
-        </div>
-
-        <div class="flex justify-end gap-3">
-            <button type="reset" class="btn btn-ghost">Réinitialiser</button>
-            <button type="submit" class="btn bg-accent text-white border-none hover:opacity-90" id="submitButton">Envoyer le message</button>
-        </div>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <p id="notification" role="status" aria-live="polite" class="text-sm text-ink-muted">
+          Tous les champs sont requis.
+        </p>
+        <CtaButton type="submit" variant="night" id="submitButton">Envoyer le message</CtaButton>
+      </div>
     </form>
-</div>
-</div>
+  </div>
+</section>
 
 <script>
-import { sendEmail } from "@/services/mail.service";
-import type {MailResponse} from "../services/mail.service"; 
+  import { sendEmail } from "@/services/mail.service";
+  import type { MailResponse } from "../services/mail.service";
 
-interface FormContact {
+  interface FormContact {
     email: string;
     name: string;
     subject: string;
     content: string;
     website: string;
-}
+  }
 
+  const form = document.getElementById("contactForm") as HTMLFormElement;
+  const submitButton = document.getElementById("submitButton") as HTMLButtonElement;
+  const notification = document.getElementById("notification") as HTMLParagraphElement;
 
-const form = document.getElementById("contactForm") as HTMLFormElement;
-const submitButton = document.getElementById("submitButton") as HTMLButtonElement;
-const containerNotification = document.getElementById("notification") as HTMLDivElement;
+  const BUTTON_LABEL = "Envoyer le message";
 
-form.addEventListener('submit', async (e) => {
+  const setNotification = (message: string, state: "info" | "success" | "error") => {
+    notification.textContent = message;
+    notification.className = {
+      info: "text-sm text-ink-muted",
+      success: "text-sm font-bold text-green-700",
+      error: "text-sm font-bold text-red-700",
+    }[state];
+  };
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    submitButton.disabled = true;
-    submitButton.textContent = "Envoi en cours...";
+    const data = Object.fromEntries(new FormData(form)) as unknown as FormContact;
 
-    containerNotification.classList.add('hidden');
-
-    // protection spam simple
-    const honey = (document.querySelector('input[name="website"') as HTMLInputElement).value;
-    if(honey){
-        return;
+    // Protection anti-spam : un robot remplit le champ caché
+    if (data.website) {
+      form.reset();
+      return;
     }
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData) as unknown as FormContact;
+    submitButton.disabled = true;
+    submitButton.textContent = "Envoi en cours…";
+    setNotification("Envoi en cours…", "info");
 
-    const payload = {
-        name: data.name,
-        email: data.email,
-        subject: data.subject,
-        content: data.content
-    };
-
-    const result: MailResponse = await sendEmail(payload);
+    const result: MailResponse = await sendEmail({
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      content: data.content,
+    });
 
     submitButton.disabled = false;
-    submitButton.textContent = "Envoyer le message";
+    submitButton.textContent = BUTTON_LABEL;
 
-    containerNotification.classList.remove('hidden');
-
-    if(result.success){
-        containerNotification.className = "mt-4 p-4 rounded-lg bg-green-100 border border-green-400 text-green-700";
-        containerNotification.textContent = "Message envoyé avec succès !";
-        form.reset();
-
-        // retire la notif après 5 secondes
-        setTimeout(() => {
-            containerNotification.classList.add("hidden");
-        }, 5000)
-    }else{
-        containerNotification.className = "mt-4 p-4 rounded-lg bg-red-100 border border-red-400 text-red-700"
-        containerNotification.textContent = "Echec de l'envoie du message. Reessayer plus tard";
+    if (result.success) {
+      setNotification("Message envoyé, merci ! Je vous réponds rapidement.", "success");
+      form.reset();
+    } else {
+      setNotification("L'envoi a échoué. Réessayez plus tard ou contactez-moi par email à l'adresse guillemot.clement@protonmail.com.", "error");
     }
-})
-
-
+  });
 </script>

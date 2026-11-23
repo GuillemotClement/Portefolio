@@ -1,35 +1,71 @@
 ---
-import { Image } from "astro:assets";
-import image from '../../public/heroImage.png'
-import { MoveRight, Mail} from '@lucide/astro';
+import CtaButton from "./Ui/CtaButton.astro";
+import { site } from "@/data/site";
 
+const checklist = [
+  "Rigueur",
+  "Résolution de problèmes",
+  "Travail en équipe",
+  "Titre CDA (Bac+3/4)",
+  "Full-stack PHP",
+];
+
+const trust = [
+  site.availability,
+  "Bretagne · Morbihan",
+  "Poste full-stack ou back-end",
+];
 ---
-<section class="h-200">
-  <!-- CONTAINER BLOC -->
-  <div class="container mx-auto">
-    <!-- CONTENT BLOC -->
-    <div class="h-200 flex justify-center items-center ">
-      <!-- BLOC TEXT -->
-      <div class="h-150 flex flex-col justify-center items-start px-20">
-        <h1 class="font-bold text-6xl text-wrap">Clément <br> GUILLEMOT</h1>
-        <h2 class="text-primary font-extrabold text-5xl">Développeur <br/> full-stack.</h2>
-        <p class="mt-2 mb-5">De la maintenance aéronautique à la conception <br/> d'applications robustes</p>
-        
-        <div class="flex gap-x-3">
-          <a class="btn btn-primary" href="#projects">
-            Vois mes projets
-            <MoveRight />
-          </a>
-          <a class="btn btn-ghosty" href="#contact">
-            Me Contacter
-            <Mail />
-          </a>
+
+<section class="bg-night text-on-night">
+  <div class="container-page py-14 md:pt-25 md:pb-22">
+    <div class="grid items-center gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
+      <div>
+        <p class="mb-5.5 text-[13px] font-bold tracking-[.12em] text-lime uppercase">
+          {site.role}
+        </p>
+        <h1 class="max-w-[15ch] text-[clamp(40px,6.4vw,74px)]">
+          8 ans à fiabiliser des hélicoptères.{" "}
+          <span class="text-lime">Maintenant, du code.</span>
+        </h1>
+        <p class="mt-6.5 max-w-[54ch] text-[clamp(17px,2vw,20px)] text-on-night-muted">
+          Ancien technicien de maintenance aéronautique, je conçois des
+          applications web robustes avec la même rigueur.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3.5">
+          <CtaButton href="#projets">Voir mes projets</CtaButton>
+          <CtaButton href={site.cv} variant="outline-light" download={site.cvFileName}>
+            Télécharger mon CV
+          </CtaButton>
         </div>
       </div>
-      <!-- BLOC IMAGE -->
-      <div class="h-150  hidden lg:block">
-        <Image src={image} alt="Logo" class="h-150 w-auto" />
+
+      <div class="overflow-hidden rounded-[10px] border border-night-line bg-night-2 font-mono">
+        <div class="flex justify-between border-b border-night-line px-4.5 py-3 text-xs tracking-[.08em] text-on-night-muted uppercase">
+          <span>Checklist pré-vol</span>
+          <span aria-hidden="true">CG-2026</span>
+        </div>
+        <ul class="px-4.5 pt-3.5 pb-4.5 text-sm leading-[2.2] text-on-night-muted">
+          {checklist.map((item) => (
+            <li class="flex gap-2.5">
+              <span>{item}</span>
+              <span class="mb-2.5 flex-1 border-b border-dotted border-night-line" aria-hidden="true" />
+              <b class="font-medium text-lime">OK</b>
+            </li>
+          ))}
+          <li class="flex gap-2.5">
+            <span class="text-lime">▸ Prochain poste</span>
+            <span class="mb-2.5 flex-1 border-b border-dotted border-night-line" aria-hidden="true" />
+            <b class="font-medium text-on-night">vous ?</b>
+          </li>
+        </ul>
       </div>
     </div>
+
+    <ul class="mt-12 flex flex-col gap-3 border-t border-night-line pt-6 text-[15px] text-on-night-muted md:mt-16 md:flex-row md:flex-wrap md:gap-8">
+      {trust.map((item) => (
+        <li class="before:mr-2.5 before:text-lime before:content-['✦']">{item}</li>
+      ))}
+    </ul>
   </div>
 </section>

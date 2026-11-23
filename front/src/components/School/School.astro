@@ -1,20 +1,39 @@
 ---
 import SchoolCard from "./SchoolCard.astro";
-import { getCollectionRecords } from "@/services/pocketbase.service";
-import type { School } from "../../types/types"
+import SectionHeading from "../Ui/SectionHeading.astro";
+import { schools } from "@/data/school";
 
-const schools = await getCollectionRecords<School>('school')
-
+const featured = schools.filter((school) => school.featured);
+const others = schools.filter((school) => !school.featured);
 ---
-<div class="section" id="formation">
-    <div class="section-container">
-        <h2 class="section-title">Formations</h2>
-        <div class="divider"></div>
-        <div>
-            {schools.map(school => ( 
-                <SchoolCard school={school} />
-                <div class="divider"></div>
-            ))}
-        </div>
-    </div>
-</div>
+
+<section id="formations" class="border-y border-line bg-soft py-16 md:py-24">
+  <div class="container-page">
+    <SectionHeading number="04" label="Formations">
+      <Fragment slot="title">Diplômes et certifications</Fragment>
+      Deux titres professionnels en développement, après une formation technique
+      et militaire.
+    </SectionHeading>
+
+    <ul class="grid gap-6 md:grid-cols-2">
+      {featured.map((school) => <SchoolCard school={school} />)}
+    </ul>
+
+    {
+      others.length > 0 && (
+        <ul class="mt-8 border-t border-line">
+          {others.map((school) => (
+            <li class="grid gap-1 border-b border-line py-4.5 md:grid-cols-[200px_1fr_auto] md:items-baseline md:gap-6">
+              <span class="font-mono text-[13px] text-ink-muted">{school.date}</span>
+              <div>
+                <b>{school.title}</b>
+                <span class="block text-[14.5px] text-ink-muted">{school.subtitle}</span>
+              </div>
+              <span class="text-sm text-ink-muted">{school.city}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>

@@ -1,0 +1,292 @@
+---
+/**
+ * Illustration d'un projet, dessinée en SVG dans la charte « Crépuscule ».
+ * Décorative : le titre de la carte porte l'information.
+ */
+import type { ProjectIllustrationKind } from "@/types/types";
+
+interface Props {
+  kind: ProjectIllustrationKind;
+}
+
+const { kind } = Astro.props;
+
+const night = "var(--color-night)";
+const lime = "var(--color-lime)";
+const muted = "var(--color-ink-muted)";
+const kraft = "#c9b28f";
+
+const backgrounds: Record<ProjectIllustrationKind, string> = {
+  books: "#efe1cb",
+  running: "#d9e4f0",
+  home: "#dfe8d6",
+  radio: "#f2dccf",
+  dashboard: "#e3e1f0",
+  erp: "#e8e4da",
+};
+---
+
+<div
+  class="aspect-16/10 overflow-hidden border-b border-line"
+  style={{ background: backgrounds[kind] }}
+  aria-hidden="true"
+>
+  <svg
+    viewBox="0 0 320 200"
+    class="h-full w-full transition-transform duration-300 group-hover:scale-[1.04]"
+  >
+    {
+      kind === "books" && (
+        <g stroke-linejoin="round">
+          {/* Étagère du haut */}
+          <rect x="52" y="36" width="18" height="60" fill={night} />
+          <rect x="52" y="46" width="18" height="3" fill={lime} />
+          <rect x="52" y="82" width="18" height="3" fill={lime} />
+          <rect x="72" y="46" width="14" height="50" fill={kraft} />
+          <rect x="89" y="33" width="19" height="63" fill={lime} stroke={night} stroke-width="2" />
+          <rect x="89" y="44" width="19" height="3" fill={night} />
+          <rect x="111" y="51" width="13" height="45" fill="#fff" stroke={night} stroke-width="2" />
+          <rect x="126" y="40" width="18" height="56" fill={muted} />
+          <rect x="126" y="50" width="18" height="3" fill="#fff" />
+          <rect x="162" y="46" width="16" height="50" fill={night} transform="rotate(-16 178 96)" />
+          <rect x="36" y="96" width="248" height="6" rx="1" fill={night} />
+
+          {/* Bulle « bla bla » */}
+          <rect x="196" y="30" width="88" height="40" rx="12" fill={night} />
+          <path d="M210 69 L224 69 L206 84 Z" fill={night} />
+          <text x="240" y="56" text-anchor="middle" font-size="15" font-weight="800" fill={lime}>
+            bla bla…
+          </text>
+
+          {/* Étagère du bas */}
+          <rect x="56" y="150" width="56" height="16" fill={night} />
+          <rect x="62" y="137" width="46" height="13" fill={lime} stroke={night} stroke-width="2" />
+          <rect x="58" y="125" width="50" height="12" fill={kraft} />
+          <rect x="125" y="111" width="15" height="55" fill="#fff" stroke={night} stroke-width="2" />
+          <rect x="142" y="104" width="20" height="62" fill={night} />
+          <rect x="142" y="116" width="20" height="3" fill={lime} />
+          <rect x="142" y="150" width="20" height="3" fill={lime} />
+          <rect x="164" y="118" width="14" height="48" fill={muted} />
+          <rect x="181" y="109" width="17" height="57" fill={lime} stroke={night} stroke-width="2" />
+
+          {/* Plante */}
+          <ellipse cx="240" cy="126" rx="7" ry="14" fill={lime} stroke={night} stroke-width="2" transform="rotate(-25 240 126)" />
+          <ellipse cx="256" cy="126" rx="7" ry="14" fill={lime} stroke={night} stroke-width="2" transform="rotate(25 256 126)" />
+          <ellipse cx="248" cy="118" rx="6" ry="15" fill={lime} stroke={night} stroke-width="2" />
+          <path d="M234 140 L262 140 L258 166 L238 166 Z" fill={night} />
+          <rect x="36" y="166" width="248" height="6" rx="1" fill={night} />
+        </g>
+      )
+    }
+
+    {
+      kind === "running" && (
+        <g>
+          {/* Écran de l'application : allure cible et courbe de progression */}
+          <rect x="40" y="26" width="240" height="148" rx="12" fill={night} />
+          <text x="60" y="52" font-size="10" font-weight="700" letter-spacing="1.5" fill="var(--color-on-night-muted)">
+            ALLURE CIBLE
+          </text>
+          <text x="60" y="82" font-size="26" font-weight="800" fill={lime}>
+            4'52"<tspan dx="4" font-size="13" fill="var(--color-on-night)">/km</tspan>
+          </text>
+          <rect x="208" y="40" width="56" height="22" rx="11" fill="var(--color-night-line)" />
+          <text x="236" y="55" text-anchor="middle" font-size="11" font-weight="700" fill="var(--color-on-night)">
+            10 km
+          </text>
+
+          {[108, 129, 150].map((y) => (
+            <line x1="60" y1={y} x2="260" y2={y} stroke="var(--color-night-line)" stroke-width="1" />
+          ))}
+          <path
+            d="M60 150 L60 134 C90 120 110 142 140 126 S190 104 220 114 S250 100 260 96 L260 150 Z"
+            fill={lime}
+            fill-opacity=".15"
+          />
+          <path
+            d="M60 134 C90 120 110 142 140 126 S190 104 220 114 S250 100 260 96"
+            fill="none"
+            stroke={lime}
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <line x1="220" y1="114" x2="220" y2="150" stroke={lime} stroke-opacity=".5" stroke-dasharray="3 3" />
+          <circle cx="220" cy="114" r="5" fill={lime} stroke={night} stroke-width="2" />
+        </g>
+      )
+    }
+
+    {
+      kind === "home" && (
+        <g stroke-linejoin="round">
+          {/* Arbre */}
+          <rect x="44" y="128" width="6" height="44" fill={night} />
+          <circle cx="47" cy="118" r="18" fill={lime} stroke={night} stroke-width="2" />
+
+          {/* Maison */}
+          <rect x="146" y="58" width="12" height="26" fill={night} />
+          <rect x="80" y="100" width="96" height="72" fill="#fff" stroke={night} stroke-width="2" />
+          <path d="M68 104 L128 52 L188 104 Z" fill={night} />
+          <rect x="92" y="114" width="20" height="20" fill={lime} stroke={night} stroke-width="2" />
+          <path d="M102 114 L102 134 M92 124 L112 124" stroke={night} stroke-width="2" />
+          <rect x="132" y="128" width="26" height="44" fill={kraft} stroke={night} stroke-width="2" />
+          <circle cx="152" cy="151" r="2.5" fill={night} />
+          <rect x="30" y="172" width="168" height="6" rx="1" fill={night} />
+
+          {/* Carte de l'application : tâches et budget du foyer */}
+          <rect x="204" y="34" width="96" height="132" rx="10" fill={night} />
+          <text x="216" y="56" font-size="9" font-weight="700" letter-spacing="1.5" fill="var(--color-on-night-muted)">
+            FOYER
+          </text>
+          {[70, 92, 114].map((y, i) => (
+            <g>
+              <rect x="216" y={y} width="12" height="12" rx="3" fill={i < 2 ? lime : "none"} stroke={lime} stroke-width="1.5" />
+              {i < 2 && <path d={`M219 ${y + 6} L221.5 ${y + 8.5} L225 ${y + 3.5}`} fill="none" stroke={night} stroke-width="2" stroke-linecap="round" />}
+              <rect x="234" y={y + 3} width={i === 1 ? 40 : 54} height="6" rx="3" fill="var(--color-night-line)" />
+            </g>
+          ))}
+          <text x="216" y="146" font-size="9" font-weight="700" letter-spacing="1.5" fill="var(--color-on-night-muted)">
+            BUDGET
+          </text>
+          <rect x="216" y="152" width="72" height="6" rx="3" fill="var(--color-night-line)" />
+          <rect x="216" y="152" width="46" height="6" rx="3" fill={lime} />
+        </g>
+      )
+    }
+
+    {
+      kind === "radio" && (
+        <g stroke-linejoin="round" stroke-linecap="round">
+          {/* Ondes sonores */}
+          <path d="M52 92 Q42 108 52 124" fill="none" stroke={night} stroke-width="3" />
+          <path d="M38 84 Q24 108 38 132" fill="none" stroke={night} stroke-width="3" />
+
+          {/* Meuble du poste TSF */}
+          <path d="M74 172 L74 86 Q74 32 160 32 Q246 32 246 86 L246 172 Z" fill={kraft} stroke={night} stroke-width="3" />
+          <rect x="62" y="170" width="196" height="8" rx="2" fill={night} />
+
+          {/* Grille du haut-parleur */}
+          <path d="M96 118 L96 84 Q96 52 160 52 Q224 52 224 84 L224 118 Z" fill={night} />
+          {[112, 128, 144, 160, 176, 192, 208].map((x) => (
+            <line x1={x} y1={x === 112 || x === 208 ? 76 : 62} x2={x} y2="112" stroke="var(--color-night-line)" stroke-width="3" />
+          ))}
+
+          {/* Cadran FM */}
+          <rect x="96" y="130" width="88" height="28" rx="4" fill={lime} stroke={night} stroke-width="2" />
+          {[106, 118, 130, 142, 154, 166, 174].map((x) => (
+            <line x1={x} y1="134" x2={x} y2="140" stroke={night} stroke-width="1.5" />
+          ))}
+          <text x="104" y="153" font-size="9" font-weight="800" fill={night}>FM 98.2</text>
+          <line x1="160" y1="132" x2="160" y2="156" stroke={night} stroke-width="2.5" />
+
+          {/* Boutons */}
+          <circle cx="204" cy="144" r="11" fill={night} />
+          <line x1="204" y1="144" x2="204" y2="136" stroke={lime} stroke-width="2.5" />
+          <circle cx="230" cy="144" r="8" fill={night} />
+          <line x1="230" y1="144" x2="235" y2="139" stroke={lime} stroke-width="2.5" />
+
+          {/* Puce ESP32 */}
+          <rect x="262" y="40" width="40" height="40" rx="4" fill={night} />
+          <rect x="272" y="50" width="20" height="20" rx="2" fill="none" stroke={lime} stroke-width="1.5" />
+          {[48, 58, 68].map((y) => (
+            <g>
+              <line x1="256" y1={y + 2} x2="262" y2={y + 2} stroke={night} stroke-width="2" />
+              <line x1="302" y1={y + 2} x2="308" y2={y + 2} stroke={night} stroke-width="2" />
+            </g>
+          ))}
+          <path d="M282 80 Q282 100 246 104" fill="none" stroke={night} stroke-width="2" stroke-dasharray="3 4" />
+        </g>
+      )
+    }
+
+    {
+      kind === "dashboard" && (
+        <g stroke-linejoin="round" stroke-linecap="round">
+          {/* Fenêtre du dashboard : tableau de tâches par projet */}
+          <rect x="24" y="30" width="200" height="142" rx="10" fill={night} />
+          {[38, 48, 58].map((x) => (
+            <circle cx={x} cy="42" r="3" fill="var(--color-night-line)" />
+          ))}
+          <rect x="36" y="56" width="30" height="104" rx="4" fill="var(--color-night-2)" />
+          {[66, 78, 90].map((y, i) => (
+            <rect x="42" y={y} width="18" height="5" rx="2.5" fill={i === 0 ? lime : "var(--color-night-line)"} />
+          ))}
+          {[
+            { x: 76, cards: [{ y: 68, h: 22 }, { y: 94, h: 16 }] },
+            { x: 124, cards: [{ y: 68, h: 28, active: true }] },
+            { x: 172, cards: [{ y: 68, h: 16 }, { y: 88, h: 22 }] },
+          ].map((column) => (
+            <g>
+              <rect x={column.x} y="56" width="40" height="5" rx="2.5" fill="var(--color-night-line)" />
+              {column.cards.map((card) => (
+                <rect
+                  x={column.x}
+                  y={card.y}
+                  width="40"
+                  height={card.h}
+                  rx="3"
+                  fill={card.active ? lime : "var(--color-night-2)"}
+                  stroke={card.active ? "none" : "var(--color-night-line)"}
+                />
+              ))}
+            </g>
+          ))}
+
+          {/* Facture */}
+          <g transform="rotate(6 236 128)">
+            <rect x="202" y="88" width="68" height="84" rx="4" fill="#fff" stroke={night} stroke-width="2" />
+            <text x="212" y="108" font-size="10" font-weight="800" fill={night}>FACTURE</text>
+            {[116, 126, 136].map((y) => (
+              <rect x="212" y={y} width="48" height="4" rx="2" fill={muted} fill-opacity=".35" />
+            ))}
+            <rect x="212" y="150" width="48" height="12" rx="2" fill={lime} stroke={night} stroke-width="1.5" />
+          </g>
+
+          {/* Email envoyé par le micro-service */}
+          <path d="M236 48 L226 48 M240 58 L222 58" stroke={night} stroke-width="2.5" />
+          <rect x="246" y="30" width="54" height="36" rx="3" fill={lime} stroke={night} stroke-width="2" />
+          <path d="M246 32 L273 52 L300 32" fill="none" stroke={night} stroke-width="2" />
+        </g>
+      )
+    }
+
+    {
+      kind === "erp" && (
+        <g stroke-linejoin="round" stroke-linecap="round">
+          {/* Tableau de l'application métier : liste des chantiers */}
+          <rect x="24" y="28" width="196" height="144" rx="10" fill="#fff" stroke={night} stroke-width="2.5" />
+          <rect x="24" y="28" width="196" height="26" rx="10" fill={night} />
+          <rect x="24" y="44" width="196" height="10" fill={night} />
+          <text x="38" y="46" font-size="10" font-weight="800" letter-spacing="1.5" fill={lime}>CHANTIERS</text>
+          {[66, 88, 110, 132, 154].map((y, i) => (
+            <g>
+              {i === 2 && <rect x="32" y={y - 7} width="180" height="20" rx="3" fill={lime} />}
+              <rect x="40" y={y} width="34" height="6" rx="3" fill={night} />
+              <rect x="86" y={y} width={i % 2 ? 56 : 72} height="6" rx="3" fill={muted} fill-opacity=".4" />
+              <circle cx="196" cy={y + 3} r="5" fill={i === 3 ? "none" : night} stroke={night} stroke-width="2" />
+            </g>
+          ))}
+
+          {/* Étiquette numéro de série */}
+          <g transform="rotate(-8 262 76)">
+            <path d="M232 56 L284 56 L298 76 L284 96 L232 96 Z" fill={kraft} stroke={night} stroke-width="2" />
+            <circle cx="284" cy="76" r="4" fill="#fff" stroke={night} stroke-width="2" />
+            <text x="240" y="73" font-size="8" font-weight="700" fill={night}>N° SÉRIE</text>
+            {[240, 244, 247, 252, 255, 260, 263, 268].map((x, i) => (
+              <rect x={x} y="78" width={i % 3 ? 1.5 : 2.5} height="10" fill={night} />
+            ))}
+          </g>
+
+          {/* Engrenage */}
+          <g transform="translate(262 142)">
+            {[0, 45, 90, 135].map((angle) => (
+              <rect x="-4" y="-26" width="8" height="52" rx="2" fill={night} transform={`rotate(${angle})`} />
+            ))}
+            <circle r="19" fill={night} />
+            <circle r="8" fill={lime} stroke={night} stroke-width="2" />
+          </g>
+        </g>
+      )
+    }
+  </svg>
+</div>

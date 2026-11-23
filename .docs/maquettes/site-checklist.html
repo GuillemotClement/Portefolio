@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clément Guillemot · Développeur full-stack</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0e0f1a;--night-2:#171a2b;--on-night:#f3f1ea;--on-night-muted:#b9b6c8;--night-line:#2c3048;
+    --soft:#f6f6f3;--ink:#15172a;--ink-muted:#4d5064;--line:#e4e4ea;--lime:#d4ff3a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#fff;color:var(--ink);font-family:Inter,sans-serif;font-size:17px;line-height:1.6}
+  h1,h2,h3{line-height:1.1;font-weight:800;letter-spacing:-.03em;margin:0}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  ul,ol{margin:0;padding:0;list-style:none}
+  .container{max-width:1120px;margin:0 auto;padding:0 24px}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .lime{color:var(--lime)}
+  .mark{background:linear-gradient(transparent 58%,var(--lime) 58%,var(--lime) 92%,transparent 92%);padding:0 .08em}
+  .num-outline{color:transparent;-webkit-text-stroke:1.5px var(--ink);font-weight:800;line-height:1}
+  .night .num-outline{-webkit-text-stroke-color:var(--lime)}
+  :focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+
+  /* Boutons (CtaButton) */
+  .btn{display:inline-block;border:2px solid transparent;border-radius:6px;font-weight:700;text-decoration:none;font-size:15px;padding:13px 22px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;font-family:inherit}
+  .btn-sm{font-size:14px;padding:9px 16px}
+  .btn-lime{background:var(--lime);color:var(--night);box-shadow:4px 4px 0 rgba(212,255,58,.25)}
+  .btn-lime:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(212,255,58,.35)}
+  .btn-outline{border-color:var(--night-line);color:var(--on-night)}
+  .btn-outline:hover{border-color:var(--on-night-muted)}
+  .btn-night{background:var(--night);color:var(--lime)}
+
+  /* Sections */
+  section{padding:64px 0}
+  @media(min-width:768px){section{padding:96px 0}}
+  .night{background:var(--night);color:var(--on-night)}
+  .soft{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .heading{display:grid;gap:24px;align-items:end;margin-bottom:56px}
+  @media(min-width:768px){.heading{grid-template-columns:1fr 2fr;gap:32px}}
+  .heading .label{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
+  .heading .label .num-outline{font-size:28px;letter-spacing:0}
+  .night .heading .label{color:var(--on-night-muted)}
+  .heading h2{font-size:clamp(30px,4.4vw,46px)}
+  .heading p{color:var(--ink-muted);max-width:52ch;margin:0}
+  .night .heading p{color:var(--on-night-muted)}
+
+  /* Header */
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--night-line)}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;letter-spacing:-.02em}
+  .logo span:first-child{display:grid;place-items:center;width:36px;height:36px;border-radius:6px;background:var(--lime);color:var(--night);font-size:15px}
+  .nav-links{display:none;gap:28px;font-size:15px}
+  .nav-links a{color:var(--on-night-muted);text-decoration:none}
+  .nav-links a:hover{color:var(--on-night)}
+  @media(min-width:860px){.nav-links{display:flex}}
+  .mobile-menu{position:relative}
+  .mobile-menu summary{list-style:none;cursor:pointer;border:2px solid var(--night-line);border-radius:6px;padding:7px 12px;font-size:14px;font-weight:700}
+  .mobile-menu summary::-webkit-details-marker{display:none}
+  .mobile-menu ul{position:absolute;right:0;top:48px;background:var(--night-2);border:1px solid var(--night-line);border-radius:8px;padding:10px;min-width:180px;z-index:10}
+  .mobile-menu a{display:block;padding:8px 10px;text-decoration:none;color:var(--on-night-muted)}
+  @media(min-width:860px){.mobile-menu{display:none}}
+  .nav-cta{display:none}
+  @media(min-width:860px){.nav-cta{display:inline-block}}
+
+  /* Hero */
+  .hero{padding:56px 0 64px}
+  @media(min-width:768px){.hero{padding:100px 0 88px}}
+  .hero-grid{display:grid;gap:40px;align-items:center}
+  @media(min-width:960px){.hero-grid{grid-template-columns:1.45fr 1fr;gap:56px}}
+  .eyebrow{margin:0 0 22px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}
+  .hero h1{font-size:clamp(40px,6.4vw,74px);max-width:15ch}
+  .hero .lead{margin:26px 0 0;max-width:54ch;font-size:clamp(17px,2vw,20px);color:var(--on-night-muted)}
+  .actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
+  .checklist{border:1px solid var(--night-line);border-radius:10px;background:var(--night-2);overflow:hidden}
+  .checklist-head{display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--night-line);font-size:12px;color:var(--on-night-muted);letter-spacing:.08em;text-transform:uppercase}
+  .checklist ul{padding:14px 18px 18px;font-size:14px;line-height:2.2;color:var(--on-night-muted)}
+  .checklist li{display:flex;gap:10px}
+  .checklist li .dots{flex:1;border-bottom:1px dotted var(--night-line);margin-bottom:10px}
+  .checklist li b{color:var(--lime);font-weight:500}
+  .checklist li.next b{color:var(--on-night)}
+  .trust{display:flex;flex-direction:column;gap:12px;margin-top:48px;padding-top:24px;border-top:1px solid var(--night-line);font-size:15px;color:var(--on-night-muted)}
+  @media(min-width:768px){.trust{flex-direction:row;flex-wrap:wrap;gap:32px;margin-top:64px}}
+  .trust li::before{content:'✦';color:var(--lime);margin-right:10px}
+
+  /* À propos */
+  .about-text p{margin:0 0 18px;color:var(--ink-muted)}
+  .about-text strong{color:var(--ink)}
+  .about-grid{display:grid;gap:32px}
+  @media(min-width:768px){.about-grid{grid-template-columns:1fr 2fr;gap:32px}}
+  .about-quote{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+  .qualities{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));border-top:1px solid var(--line);margin-top:56px}
+  .qualities article{padding:32px 28px 36px 0;border-bottom:1px solid var(--line)}
+  .qualities .num-outline{font-size:40px}
+  .qualities h3{font-size:20px;letter-spacing:-.02em;margin:18px 0 10px}
+  .qualities p{margin:0;color:var(--ink-muted);font-size:15.5px}
+
+  /* Projets */
+  .projects{display:grid;gap:24px}
+  @media(min-width:768px){.projects{grid-template-columns:repeat(2,1fr)}}
+  .card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .card:hover{transform:translateY(-4px);border-color:var(--ink);box-shadow:6px 6px 0 var(--lime)}
+  .card .thumb{aspect-ratio:16/9;background:var(--night-2);overflow:hidden;border-bottom:1px solid var(--line)}
+  .card .thumb img{width:100%;height:100%;object-fit:cover}
+  .card .body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .badges{display:flex;flex-wrap:wrap;gap:6px}
+  .badge{background:var(--night);color:var(--lime);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:4px}
+  .badge-light{background:var(--soft);color:var(--ink-muted);border:1px solid var(--line)}
+  .card h3{font-size:24px}
+  .card p{margin:0;color:var(--ink-muted);font-size:15.5px}
+  .card .why{font-size:14.5px;border-left:2px solid var(--lime);padding-left:12px}
+  .stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+  .stack span{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink)}
+  .card-links{display:flex;gap:18px;font-weight:700;font-size:15px;padding-top:4px}
+  .card-links a{text-decoration:none;border-bottom:2px solid var(--lime)}
+
+  /* Parcours (frise .steps) */
+  .steps{counter-reset:step;border-left:2px solid var(--line);margin-left:18px}
+  .steps>li{counter-increment:step;position:relative;padding:0 0 48px 40px}
+  .steps>li:last-child{padding-bottom:0}
+  .steps>li::before{content:counter(step);position:absolute;left:-19px;top:-2px;width:36px;height:36px;border-radius:50%;background:var(--night);color:var(--lime);font-weight:800;font-size:15px;display:grid;place-items:center}
+  .step-grid{display:grid;gap:8px}
+  @media(min-width:768px){.step-grid{grid-template-columns:200px 1fr;gap:32px}}
+  .step-date{font-size:13px;color:var(--ink-muted);padding-top:6px}
+  .step h3{font-size:22px;letter-spacing:-.02em}
+  .step .where{margin:6px 0 14px;color:var(--ink-muted);font-size:15px}
+  .step .where b{color:var(--ink)}
+  .step ul li{position:relative;padding-left:20px;margin-bottom:6px;font-size:15.5px;color:var(--ink-muted)}
+  .step ul li::before{content:'✓';position:absolute;left:0;color:var(--ink);font-weight:700}
+  .step.pivot h3::after{content:'Reconversion';margin-left:12px;vertical-align:middle;background:var(--lime);color:var(--night);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:4px;font-weight:700}
+
+  /* Formations */
+  .school-main{display:grid;gap:24px}
+  @media(min-width:768px){.school-main{grid-template-columns:repeat(2,1fr)}}
+  .school-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:8px}
+  .school-card .level{align-self:flex-start}
+  .school-card h3{font-size:22px;margin-top:6px}
+  .school-card .meta{color:var(--ink-muted);font-size:15px;margin:0}
+  .school-list{margin-top:32px;border-top:1px solid var(--line)}
+  .school-list li{display:grid;gap:4px;padding:18px 0;border-bottom:1px solid var(--line)}
+  @media(min-width:768px){.school-list li{grid-template-columns:200px 1fr auto;gap:24px;align-items:baseline}}
+  .school-list .d{font-size:13px;color:var(--ink-muted)}
+  .school-list b{font-size:16px}
+  .school-list span.sub{display:block;font-size:14.5px;color:var(--ink-muted)}
+  .school-list .c{font-size:14px;color:var(--ink-muted)}
+
+  /* Compétences */
+  .skills{display:grid;gap:0;border-top:1px solid var(--night-line)}
+  @media(min-width:768px){.skills{grid-template-columns:repeat(3,1fr)}}
+  .skills article{padding:32px 28px 36px 0;border-bottom:1px solid var(--night-line)}
+  .skills .num-outline{font-size:40px}
+  .skills h3{font-size:20px;margin:18px 0 16px;letter-spacing:-.02em}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--night-2);border:1px solid var(--night-line);border-radius:6px;padding:7px 12px;font-size:14px}
+  .chip img{width:18px;height:18px}
+  .chip.learning{border-color:var(--lime)}
+  .chip.learning::after{content:'en cours';font-size:11px;color:var(--lime);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  .legend{margin-top:28px;font-size:14px;color:var(--on-night-muted)}
+
+  /* Contact */
+  .contact-grid{display:grid;gap:48px}
+  @media(min-width:960px){.contact-grid{grid-template-columns:1fr 1.2fr;gap:64px}}
+  .contact-links{display:grid;gap:12px;margin-top:28px}
+  .contact-links a{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 20px;text-decoration:none;transition:border-color .15s,box-shadow .15s}
+  .contact-links a:hover{border-color:var(--ink);box-shadow:4px 4px 0 var(--lime)}
+  .contact-links small{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+  .contact-links b{font-size:16px}
+  form{background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px;display:grid;gap:18px}
+  .row{display:grid;gap:18px}
+  @media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+  label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
+  input,textarea{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--soft);color:var(--ink)}
+  input:focus,textarea:focus{outline:2px solid var(--ink);outline-offset:0;background:#fff}
+  textarea{min-height:140px;resize:vertical}
+  .hp{position:absolute;left:-9999px}
+  .form-foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+  .form-foot small{color:var(--ink-muted);font-size:13px}
+
+  /* Footer */
+  footer{background:var(--night);color:var(--on-night-muted);padding:48px 0 32px;font-size:15px}
+  .foot-grid{display:grid;gap:32px;padding-bottom:32px;border-bottom:1px solid var(--night-line)}
+  @media(min-width:768px){.foot-grid{grid-template-columns:2fr 1fr 1fr}}
+  footer h4{margin:0 0 12px;color:var(--on-night);font-size:14px;letter-spacing:.1em;text-transform:uppercase}
+  footer li{margin-bottom:6px}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--on-night)}
+  .foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:24px;font-size:13px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER + HERO ============ -->
+<div class="night">
+  <header class="container">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="logo"><span>CG</span><span>Clément Guillemot</span></a>
+      <ul class="nav-links">
+        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-lime btn-sm nav-cta">Me contacter</a>
+      <details class="mobile-menu">
+        <summary aria-label="Ouvrir le menu">Menu</summary>
+        <ul>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#projets">Projets</a></li>
+          <li><a href="#parcours">Parcours</a></li>
+          <li><a href="#competences">Compétences</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </details>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Développeur full-stack · Bretagne</p>
+          <h1>8 ans à fiabiliser des hélicoptères. <span class="lime">Maintenant, du code.</span></h1>
+          <p class="lead">Ancien technicien de maintenance aéronautique, je conçois des applications web robustes avec la même rigueur : PHP, React, et bientôt Java Spring Boot.</p>
+          <div class="actions">
+            <a href="#projets" class="btn btn-lime">Voir mes projets</a>
+            <a href="#" class="btn btn-outline">Télécharger mon CV</a>
+          </div>
+        </div>
+
+        <div class="checklist mono" aria-label="Checklist de compétences">
+          <div class="checklist-head"><span>Checklist pré-vol</span><span>CG-2026</span></div>
+          <ul>
+            <li><span>Rigueur</span><span class="dots"></span><b>OK</b></li>
+            <li><span>Résolution de problèmes</span><span class="dots"></span><b>OK</b></li>
+            <li><span>Travail en équipe</span><span class="dots"></span><b>OK</b></li>
+            <li><span>Titre CDA (Bac+3/4)</span><span class="dots"></span><b>OK</b></li>
+            <li><span>Full-stack PHP / React</span><span class="dots"></span><b>OK</b></li>
+            <li class="next"><span class="lime">▸ Prochain poste</span><span class="dots"></span><b>vous ?</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <ul class="trust">
+        <li>Disponible dès juin 2026</li>
+        <li>Bretagne · Rennes · Montréal</li>
+        <li>CDI · poste full-stack ou back-end</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ 01 À PROPOS ============ -->
+<section id="a-propos">
+  <div class="container">
+    <div class="heading">
+      <div>
+        <span class="label"><span class="num-outline">01</span>À propos</span>
+        <h2>La rigueur technique, l'envie de construire.</h2>
+      </div>
+      <p>Un parcours exigeant dans l'aéronautique, mis au service du développement logiciel.</p>
+    </div>
+
+    <div class="about-grid">
+      <p class="about-quote">« Dans un hélico comme dans une appli, <span class="mark">une erreur ne pardonne pas</span>. »</p>
+      <div class="about-text">
+        <p>Pendant <strong>8 ans</strong>, j'ai été technicien de maintenance sur hélicoptère EC665 Tigre au sein de l'Armée de Terre. J'y ai appris la rigueur, le respect des procédures, la gestion des priorités et le travail d'équipe dans des environnements où la fiabilité est vitale.</p>
+        <p>Depuis 2023, je me suis reconverti dans le développement. En alternance chez Evode, je développe et maintiens des applications métier de type ERP en <strong>PHP, SQL et jQuery</strong>. Sur mes projets, j'utilise <strong>React, Next.js et NestJS</strong>.</p>
+        <p>Je suis surtout attiré par le <strong>back-end</strong>, l'architecture et la qualité du code. J'approfondis actuellement <strong>Java Spring Boot</strong>.</p>
+      </div>
+    </div>
+
+    <div class="qualities">
+      <article>
+        <div class="num-outline">01</div>
+        <h3>Rigueur</h3>
+        <p>Une approche méthodique, héritée de la maintenance aéronautique, pour produire un code fiable et maintenable.</p>
+      </article>
+      <article>
+        <div class="num-outline">02</div>
+        <h3>Résolution de problèmes</h3>
+        <p>Analyser, comprendre et trouver des solutions concrètes, qu'il s'agisse d'un système complexe ou d'un bug tenace.</p>
+      </article>
+      <article>
+        <div class="num-outline">03</div>
+        <h3>Esprit d'équipe</h3>
+        <p>Habitué à collaborer dans des contextes exigeants, j'aime échanger, partager des idées et avancer ensemble.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 PROJETS ============ -->
+<section id="projets" class="soft">
+  <div class="container">
+    <div class="heading">
+      <div>
+        <span class="label"><span class="num-outline">02</span>Projets</span>
+        <h2>Ce que j'ai construit</h2>
+      </div>
+      <p>Des projets personnels nés de vrais besoins, et un projet d'équipe présenté pour mon titre CDA.</p>
+    </div>
+
+    <ul class="projects">
+      <li class="card">
+        <div class="thumb"><img src="../../front/public/images/ubrun.png" alt="Capture de l'application Ubrun"></div>
+        <div class="body">
+          <div class="badges"><span class="badge">En production</span><span class="badge badge-light">Perso</span></div>
+          <h3>Ubrun</h3>
+          <p>Application qui centralise les outils d'entraînement pour les coureurs : calculs, planification, suivi de performances.</p>
+          <p class="why">Je voulais regrouper les outils que j'utilisais pour préparer mes entraînements.</p>
+          <div class="stack"><span>Next.js</span><span>PostgreSQL</span><span>Tailwind</span></div>
+          <div class="card-links"><a href="#">Voir le site →</a><a href="#">GitHub →</a></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="thumb"><img src="../../front/public/images/blablabook.png" alt="Capture de l'application BlaBlaBook"></div>
+        <div class="body">
+          <div class="badges"><span class="badge">Projet d'équipe</span><span class="badge badge-light">Soutenance CDA</span></div>
+          <h3>BlaBlaBook</h3>
+          <p>Gestion d'une bibliothèque personnelle et suivi des lectures : recherche, découverte et organisation des livres.</p>
+          <p class="why">Projet présenté lors de ma soutenance pour le titre professionnel CDA.</p>
+          <div class="stack"><span>React</span><span>NestJS</span><span>PostgreSQL</span><span>Tailwind</span></div>
+          <div class="card-links"><a href="#">GitHub →</a></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="thumb"><img src="../../front/public/images/pomogo.png" alt="Capture de l'outil Pomogo dans un terminal"></div>
+        <div class="body">
+          <div class="badges"><span class="badge">En développement</span><span class="badge badge-light">Perso</span></div>
+          <h3>Pomogo</h3>
+          <p>Outil CLI en Go pour gérer des sessions Pomodoro : tâches, statistiques, ambiances sonores.</p>
+          <p class="why">Je cherchais un outil de concentration accessible directement depuis le terminal.</p>
+          <div class="stack"><span>Go</span><span>CLI</span></div>
+          <div class="card-links"><a href="#">GitHub →</a></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="thumb"><img src="../../front/public/images/katbrain.png" alt="Capture de la base de connaissances Katbrain"></div>
+        <div class="body">
+          <div class="badges"><span class="badge">En production</span><span class="badge badge-light">Perso</span></div>
+          <h3>Katbrain</h3>
+          <p>Base de connaissances personnelle construite à partir de fichiers Markdown, versionnée avec Git.</p>
+          <p class="why">Garder mes notes dans un format simple, portable et indépendant d'une plateforme.</p>
+          <div class="stack"><span>Hugo</span><span>Markdown</span><span>Coolify</span></div>
+          <div class="card-links"><a href="#">Voir le site →</a><a href="#">GitHub →</a></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 03 PARCOURS ============ -->
+<section id="parcours">
+  <div class="container">
+    <div class="heading">
+      <div>
+        <span class="label"><span class="num-outline">03</span>Parcours</span>
+        <h2>Du hangar au code</h2>
+      </div>
+      <p>Mes expériences professionnelles, de la plus récente à la plus ancienne.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-grid">
+          <div class="step-date mono">Sept. 2024 – Juin 2026</div>
+          <div>
+            <h3>Développeur full-stack (alternance)</h3>
+            <p class="where"><b>Evode</b> · Lorgues, Var</p>
+            <ul>
+              <li>Développement et maintenance d'applications métier de type ERP (PHP, SQL, jQuery)</li>
+              <li>Implémentation de nouvelles fonctionnalités et correction d'anomalies</li>
+              <li>Gestion des priorités en environnement opérationnel</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="step pivot">
+        <div class="step-grid">
+          <div class="step-date mono">Mars 2024 – Mai 2024</div>
+          <div>
+            <h3>Développeur full-stack (stage)</h3>
+            <p class="where"><b>Creamania Communication</b> · Fréjus, Var</p>
+            <ul>
+              <li>Réalisation de sites web pour différents clients</li>
+              <li>Développement de fonctionnalités avec Symfony</li>
+              <li>Échanges directs avec les clients pour cerner leurs besoins</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-grid">
+          <div class="step-date mono">Mars 2016 – Août 2023</div>
+          <div>
+            <h3>Technicien de maintenance aéronautique</h3>
+            <p class="where"><b>Armée de Terre</b> · Le Cannet-des-Maures, Var</p>
+            <ul>
+              <li>Maintenance et diagnostic sur hélicoptère EC665</li>
+              <li>Analyse et résolution d'incidents techniques</li>
+              <li>Encadrement d'équipe et coordination de la maintenance</li>
+              <li>Gestion et suivi de la documentation technique</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 04 FORMATIONS ============ -->
+<section id="formations" class="soft">
+  <div class="container">
+    <div class="heading">
+      <div>
+        <span class="label"><span class="num-outline">04</span>Formations</span>
+        <h2>Diplômes et certifications</h2>
+      </div>
+      <p>Deux titres professionnels en développement, après une formation technique et militaire.</p>
+    </div>
+
+    <div class="school-main">
+      <article class="school-card">
+        <span class="badge level">Bac+3/4</span>
+        <h3>Concepteur Développeur d'Applications</h3>
+        <p class="meta">Titre professionnel · O'clock</p>
+        <p class="meta mono" style="font-size:13px">Oct. 2024 – Juin 2026</p>
+      </article>
+      <article class="school-card">
+        <span class="badge level">Bac+2</span>
+        <h3>Développeur Web et Web Mobile</h3>
+        <p class="meta">Titre professionnel · AFPA, Fontenay-le-Comte</p>
+        <p class="meta mono" style="font-size:13px">Oct. 2023 – Juin 2024</p>
+      </article>
+    </div>
+
+    <ul class="school-list">
+      <li><span class="d mono">2016 – 2018</span><div><b>Certificat Technique du Premier Degré</b><span class="sub">Maintenance aéronautique, avionique et armement</span></div><span class="c">Rochefort</span></li>
+      <li><span class="d mono">2016</span><div><b>Certificat Militaire de Premier Degré</b><span class="sub">Commandement et encadrement d'équipe (sergent)</span></div><span class="c">Saint-Maixent</span></li>
+      <li><span class="d mono">2013 – 2015</span><div><b>BTS SIO SISR</b><span class="sub">Services informatiques aux organisations</span></div><span class="c">Rennes</span></li>
+      <li><span class="d mono">2010 – 2013</span><div><b>Bac Pro ELEEC</b><span class="sub">Électrotechnique, énergie, équipements communicants</span></div><span class="c">Pontivy</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 05 COMPÉTENCES ============ -->
+<section id="competences" class="night">
+  <div class="container">
+    <div class="heading">
+      <div>
+        <span class="label"><span class="num-outline">05</span>Compétences</span>
+        <h2>Ma boîte à outils</h2>
+      </div>
+      <p>Les technologies que j'utilise au quotidien, et celles que j'apprends.</p>
+    </div>
+
+    <div class="skills">
+      <article>
+        <div class="num-outline">01</div>
+        <h3>Front-end</h3>
+        <div class="chips">
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="">JavaScript</span>
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="">TypeScript</span>
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">Astro</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">jQuery</span>
+        </div>
+      </article>
+      <article>
+        <div class="num-outline">02</div>
+        <h3>Back-end</h3>
+        <div class="chips">
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/php/php-original.svg" alt="">PHP</span>
+          <span class="chip">Symfony</span>
+          <span class="chip">NestJS</span>
+          <span class="chip">Express</span>
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/go/go-original.svg" alt="">Go</span>
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="">PostgreSQL</span>
+          <span class="chip learning">Java Spring Boot</span>
+        </div>
+      </article>
+      <article>
+        <div class="num-outline">03</div>
+        <h3>Outils</h3>
+        <div class="chips">
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="">Git</span>
+          <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="">Docker</span>
+          <span class="chip">GitHub Actions</span>
+          <span class="chip">PocketBase</span>
+          <span class="chip">Coolify</span>
+        </div>
+      </article>
+    </div>
+    <p class="legend">Les compétences encadrées en <span class="lime">citron</span> sont en cours d'apprentissage.</p>
+  </div>
+</section>
+
+<!-- ============ 06 CONTACT ============ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="heading" style="grid-template-columns:1fr;margin-bottom:0">
+          <div>
+            <span class="label"><span class="num-outline">06</span>Contact</span>
+            <h2>Parlons de <span class="mark">votre équipe</span>.</h2>
+          </div>
+          <p>Vous recrutez un développeur full-stack ou back-end ? Écrivez-moi, je réponds sous 48 h.</p>
+        </div>
+        <div class="contact-links">
+          <a href="https://www.linkedin.com/in/cl%C3%A9ment-guillemot/"><span><small>LinkedIn</small><b>clément-guillemot</b></span><span>→</span></a>
+          <a href="https://github.com/GuillemotClement"><span><small>GitHub</small><b>GuillemotClement</b></span><span>→</span></a>
+          <a href="#"><span><small>CV</small><b>Télécharger en PDF</b></span><span>↓</span></a>
+        </div>
+      </div>
+
+      <form novalidate>
+        <div class="row">
+          <div><label for="name">Nom</label><input id="name" name="name" autocomplete="name" placeholder="Marie Dupont"></div>
+          <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="marie@entreprise.fr"></div>
+        </div>
+        <div><label for="company">Entreprise <span style="font-weight:400;color:var(--ink-muted)">(facultatif)</span></label><input id="company" name="company" placeholder="Nom de l'entreprise"></div>
+        <div><label for="message">Message</label><textarea id="message" name="message" placeholder="Présentez le poste ou votre projet"></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="website">Site web</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        <div class="form-foot">
+          <small role="status" aria-live="polite">Tous les champs sont requis sauf l'entreprise.</small>
+          <button type="submit" class="btn btn-night">Envoyer le message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo" style="color:var(--on-night)"><span>CG</span><span>Clément Guillemot</span></a>
+        <p style="margin:14px 0 0;max-width:40ch">Développeur full-stack, ancien technicien aéronautique. Disponible dès juin 2026.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#projets">Projets</a></li>
+          <li><a href="#parcours">Parcours</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Liens</h4>
+        <ul>
+          <li><a href="https://github.com/GuillemotClement">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/cl%C3%A9ment-guillemot/">LinkedIn</a></li>
+          <li><a href="#">CV (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Clément Guillemot</span>
+      <span>Fait avec Astro, Tailwind et PocketBase</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 # Projet
 
 - Le projet utilise Astro et Tailwind pour le front end.
-- L'administration est réalisé avec Pocketbase.
+- Le contenu (projets, parcours, formations, compétences) est écrit en dur dans `front/src/data`.
 
 # Instruction
 

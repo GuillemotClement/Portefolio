@@ -14,7 +14,7 @@ Personal portfolio showcasing my background, technical skills and projects.
 
 ### Back-end
 
-- PocketBase
+- Go mailer (contact form)
 
 ### DevOps
 
@@ -59,32 +59,18 @@ Using Astro allows the portfolio to:
 - Load quickly on all devices
 - Maintain excellent SEO
 - Keep frontend complexity low
-- Consume content from PocketBase efficiently
 - Scale easily as new projects and experiences are added
 
 ---
 
-## 🗄️ PocketBase
+## 🗂️ Content
 
-The portfolio uses PocketBase as a lightweight backend and content management layer.
+All content is hardcoded in TypeScript files under `front/src/data`:
 
-PocketBase is responsible for managing all dynamic content displayed on the website, including:
+- `projects.ts` - projects shown in the Projects section
+- `experiences.ts` - professional experiences
+- `school.ts` - education and certifications
+- `skills.ts` - technical skills grouped by category
+- `site.ts` - name, links, CV and navigation
 
-- 🏢 Professional experiences
-- 📂 Projects and portfolio entries
-- 🛠️ Technical skills
-- 🖼️ Media and assets metadata
-
-### Why PocketBase?
-
-The goal was to keep the architecture simple while avoiding hardcoded content directly in the frontend.
-
-PocketBase provides:
-
-- Lightweight SQLite-based backend
-- Built-in admin dashboard
-- REST API out of the box
-- Authentication and access control
-- Easy deployment with Docker
-
-This approach allows content to be updated independently from the frontend application while keeping the infrastructure lightweight and easy to maintain.
+To add a project, append an entry to `projects.ts` and drop its screenshot in `front/public/images/`.

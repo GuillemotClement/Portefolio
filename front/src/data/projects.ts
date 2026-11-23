@@ -1,73 +1,101 @@
-export const projects = [
+import type { Project } from "@/types/types";
+
+// Les projets s'affichent dans l'ordre de ce tableau.
+// `illustration` : dessin SVG défini dans components/Project/ProjectIllustration.astro
+export const projects: Project[] = [
   {
-    id: 1,
     title: "Ubrun",
-    status: ["prod", "dev", "perso"],
-    technos: ["nextjs", "postgresql", "tailwind"],
+    status: ["prod", "perso"],
+    technos: ["Next.js", "PostgreSQL", "Tailwind CSS"],
     description:
-      "Application permettant de centraliser différents outils d'entraînement pour les coureurs.",
+      "Application qui centralise différents outils d'entraînement pour les coureurs.",
     reason:
       "Je voulais regrouper les outils que j'utilisais pour préparer mes entraînements de course à pied.",
-    features: [
-      "Calculs et conversions pour l'entraînement",
-      "Planification et suivi des objectifs de course",
-      "Suivi de performances",
-    ],
+    features: ["Calculs et conversions pour l'entraînement"],
     github: "https://github.com/GuillemotClement/Ubrun",
-    image: "/images/ubrun.png",
-    link: "",
+    url: "https://ubrun.fr/",
+    illustration: "running",
   },
   {
-    id: 2,
+    title: "Projets clients Evode",
+    status: ["alternance"],
+    technos: ["PHP", "Framework interne", "SQL", "MySQL", "jQuery"],
+    description:
+      "Évolution et maintenance d'applications métier de type ERP pour plusieurs clients d'Evode, pendant mes deux ans d'alternance.",
+    reason:
+      "Passer d'un projet client à l'autre, comprendre chaque métier avec ses utilisateurs et livrer des évolutions en production sans casser l'existant.",
+    themes: [
+      "Facturation électronique : intégration d'API et traitement des factures",
+      "Facturation, relances et encaissements",
+      "Location et suivi de matériel",
+      "Modélisation des contrôles périodiques récurrents",
+      "Planification des interventions et suivi de chantier",
+    ],
+    linkNote: "Projet d'entreprise : code privé et confidentiel",
+    illustration: "erp",
+  },
+  {
     title: "BlaBlaBook",
     status: ["finish", "pedagogique"],
-    technos: ["react", "postgresql", "nestjs", "tailwind"],
+    technos: ["React", "NestJS", "PostgreSQL", "Tailwind CSS"],
     description:
-      "Projet pédagogique réalisé durant ma formation CDA permettant la gestion d'une bibliothèque personnelle et le suivi des lectures.",
+      "Gestion d'une bibliothèque personnelle et suivi des lectures, réalisé en équipe pendant ma formation CDA.",
     reason:
-      "Projet présenté lors de ma soutenance pour le titre professionnel CDA réalisé en équipe",
+      "Projet présenté lors de ma soutenance pour le titre professionnel CDA.",
     features: [
-      "Recherche et découverte de livre",
+      "Recherche et découverte de livres",
       "Organisation et suivi des lectures",
     ],
     github: "https://github.com/GuillemotClement/Blablabook",
-    image: "/images/blablabook.png",
-    link: "",
+    url: "https://blablabook.clementguillemot.fr/",
+    illustration: "books",
   },
   {
-    id: 3,
-    title: "Pomogo",
+    title: "Korrweb Dashboard",
+    status: ["dev", "prive"],
+    technos: ["React", "NestJS", "Express", "PostgreSQL", "Drizzle"],
+    description:
+      "ERP pour mon activité Korrweb : gestion des tâches par projet, facturation et administration d'un relais d'emails.",
+    reason:
+      "Un outil métier découpé en services : le dashboard d'un côté, et un micro-service d'envoi d'emails partagé par mes différentes applications.",
+    features: [
+      "Front React (Vite, TanStack Query, shadcn/ui) et API NestJS",
+      "Micro-service Express d'envoi d'emails via l'API Brevo, utilisé par mes sites",
+      "Accès au micro-service sécurisé par clé d'API, une clé par application, stockées en PostgreSQL avec Drizzle",
+      "Tâches par projet et factures (à venir)",
+    ],
+    illustration: "dashboard",
+  },
+  {
+    title: "Alfred",
     status: ["dev", "perso"],
-    technos: ["go"],
+    technos: ["Angular", "Spring Boot", "Java", "Tailwind CSS"],
     description:
-      "Outil CLI développé en Go pour gérer des sessions de travail de type Pomodoro.",
+      "Application de gestion de foyer : inventaire, dépenses, événements, projets et budgets, partagés entre les membres d'un même foyer.",
     reason:
-      "Je cherchais un outil de concentration directement accessible depuis le terminal.",
+      "Un projet pour apprendre Angular et Spring Boot en construisant une application complète, avec une architecture organisée par domaine métier.",
     features: [
-      "Gestion des tâches",
-      "Suivi statistique des sessions de travail",
-      "Lecture d'ambiances sonores pour la concentration",
+      "Foyer partagé entre plusieurs utilisateurs",
+      "Inventaire des articles, suivi des dépenses et des événements",
+      "API Spring Boot avec Spring Security, JPA et migrations Flyway",
     ],
-    github: "https://github.com/GuillemotClement/pomogo",
-    image: "/images/pomogo.png",
-    link: "",
+    github: "https://codeberg.org/ClementGuillemot/Alfred",
+    illustration: "home",
   },
   {
-    id: 4,
-    title: "Katbrain",
-    status: ["prod", "perso"],
-    technos: ["hugo"],
+    title: "Resonance",
+    status: ["dev", "perso"],
+    technos: ["ESP32", "C++", "Arduino", "PlatformIO"],
     description:
-      "Base de connaissances personnelle construite à partir de fichiers Markdown.",
+      "Rénovation d'un ancien poste radio TSF : son électronique est remplacée par un ESP32, en gardant son apparence et son haut-parleur d'origine.",
     reason:
-      "Je voulais conserver mes notes dans un format simple, portable et indépendant d'une plateforme tierce.",
+      "Redonner vie à un objet ancien, et sortir du web pour toucher à l'embarqué.",
     features: [
-      "Centralisation de notes techniques",
-      "Versionnement avec Git",
-      "Publication automatisée via Coolify",
+      "Écoute de musique en Bluetooth",
+      "Réception de la radio FM (à venir)",
+      "Réutilisation des composants d'origine du poste",
     ],
-    github: "https://github.com/GuillemotClement/engineering-handbook",
-    image: "/images/mkdoc.png",
-    link: "",
+    github: "https://codeberg.org/ClementGuillemot/Resonance",
+    illustration: "radio",
   },
 ];
