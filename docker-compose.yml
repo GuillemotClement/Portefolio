@@ -4,16 +4,12 @@ services:
       context: ./front
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - "4321:4321"
+    expose:
+      - "4321"
     environment:
       MAILER_URL: ${MAILER_URL}
     depends_on:
       - mailer
-    command: ["pnpm", "dev", "--host", "0.0.0.0", "--port", "4321"]
-    volumes:
-      - ./front:/app
-      - /app/node_modules
 
   mailer:
     build:

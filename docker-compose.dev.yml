@@ -1,0 +1,10 @@
+# Surcharge pour le dev local, à ne pas utiliser en prod :
+# docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+services:
+  frontend:
+    ports:
+      - "4321:4321"
+    command: ["pnpm", "dev", "--host", "0.0.0.0", "--port", "4321"]
+    volumes:
+      - ./front:/app
+      - /app/node_modules
