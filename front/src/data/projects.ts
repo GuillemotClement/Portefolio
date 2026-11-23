@@ -37,7 +37,7 @@ export const projects: Project[] = [
   {
     title: "BlaBlaBook",
     status: ["finish", "pedagogique"],
-    technos: ["React", "NestJS", "PostgreSQL", "Tailwind CSS"],
+    technos: ["React", "NestJS", "PostgreSQL", "Tailwind CSS", "Jest", "Vitest"],
     description:
       "Gestion d'une bibliothèque personnelle et suivi des lectures, réalisé en équipe pendant ma formation CDA.",
     reason:
@@ -45,6 +45,8 @@ export const projects: Project[] = [
     features: [
       "Recherche et découverte de livres",
       "Organisation et suivi des lectures",
+      "Tests unitaires et e2e : Jest côté API, Vitest et Testing Library côté front",
+      "Tests lancés automatiquement en CI avec GitHub Actions",
     ],
     github: "https://github.com/GuillemotClement/Blablabook",
     url: "https://blablabook.clementguillemot.fr/",
