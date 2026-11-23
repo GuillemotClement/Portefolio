@@ -10,8 +10,14 @@ export const skillGroups: SkillGroup[] = [
     title: "Front-end",
     skills: [
       { title: "React", logo: devicon("react/react-original.svg") },
-      { title: "TypeScript", logo: devicon("typescript/typescript-original.svg") },
-      { title: "Tailwind CSS", logo: devicon("tailwindcss/tailwindcss-original.svg") },
+      {
+        title: "TypeScript",
+        logo: devicon("typescript/typescript-original.svg"),
+      },
+      {
+        title: "Tailwind CSS",
+        logo: devicon("tailwindcss/tailwindcss-original.svg"),
+      },
     ],
   },
   {
@@ -19,7 +25,10 @@ export const skillGroups: SkillGroup[] = [
     skills: [
       { title: "PHP", logo: devicon("php/php-original.svg") },
       { title: "NestJS", logo: devicon("nestjs/nestjs-original.svg") },
-      { title: "PostgreSQL", logo: devicon("postgresql/postgresql-original.svg") },
+      {
+        title: "PostgreSQL",
+        logo: devicon("postgresql/postgresql-original.svg"),
+      },
     ],
   },
   {
@@ -27,7 +36,10 @@ export const skillGroups: SkillGroup[] = [
     skills: [
       { title: "Git", logo: devicon("git/git-original.svg") },
       { title: "Docker", logo: devicon("docker/docker-original.svg") },
-      { title: "GitHub Actions", logo: devicon("githubactions/githubactions-original.svg") },
+      {
+        title: "GitHub Actions",
+        logo: devicon("githubactions/githubactions-original.svg"),
+      },
     ],
   },
 ];
