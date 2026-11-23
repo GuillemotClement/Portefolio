@@ -1,18 +1,21 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
+import SectionHeading from "../Ui/SectionHeading.astro";
 
-import { getExpandCollectionRecords } from "../../services/pocketbase.service";
-import type { Project } from "../../types/types"
-
-const projects = await getExpandCollectionRecords<Project>('project',  'techno_id,status_id');
-
+import { projects } from "@/data/projects";
 ---
-<div class="container-section" >
-	<div class="mb-10">
-		<h2 class="title-section mb-0" id="project">Projects</h2>
-	</div>
-	
-	{projects.map(project => (
-		<ProjectCard project={project} reversed={project.order % 2 === 1}/>
-	))}
-</div>
+
+<section id="projets" class="border-y border-line bg-soft py-16 md:py-24">
+  <div class="container-page">
+    <SectionHeading number="02" label="Projets">
+      <Fragment slot="title">Ce que j'ai construit</Fragment>
+      Des applications métier en alternance, un projet d'équipe pour mon titre
+      CDA, et des projets personnels nés de vrais besoins, du web à
+      l'embarqué.
+    </SectionHeading>
+
+    <ul class="grid gap-6 md:grid-cols-2">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </ul>
+  </div>
+</section>

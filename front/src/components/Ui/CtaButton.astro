@@ -1,0 +1,55 @@
+---
+interface Props {
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: "lime" | "outline-light" | "night";
+  size?: "default" | "sm";
+  class?: string;
+  id?: string;
+  download?: boolean | string;
+  target?: string;
+}
+
+const {
+  href,
+  type = "button",
+  variant = "lime",
+  size = "default",
+  class: className = "",
+  id,
+  download,
+  target,
+} = Astro.props;
+
+const classes = [
+  "inline-block cursor-pointer rounded-md border-2 border-transparent font-bold no-underline transition-[transform,box-shadow,border-color,background-color] duration-150 disabled:cursor-wait disabled:opacity-70",
+  size === "default" ? "px-6 py-3.5 text-[15px]" : "px-4.5 py-2.5 text-sm",
+  variant === "lime" &&
+    "bg-lime text-night shadow-[4px_4px_0_rgba(212,255,58,.25)] hover:-translate-x-px hover:-translate-y-px hover:shadow-[5px_5px_0_rgba(212,255,58,.35)]",
+  variant === "outline-light" &&
+    "border-night-line text-on-night hover:border-on-night-muted",
+  variant === "night" && "bg-night text-lime hover:bg-night-2",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class={classes}
+      id={id}
+      download={download}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} id={id}>
+      <slot />
+    </button>
+  )
+}

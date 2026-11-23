@@ -9,11 +9,15 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  server: {
+    watch: {
+      usePolling: true,
+      interval: 300,
+    },
+  },
   env: {
     schema: {
       GITHUB_KEY: envField.string({ context: "server", access: "secret" }),
-      API_URL: envField.string({ context: "server", access: "secret" }),
-      POCKETBASE_KEY: envField.string({ context: "server", access: "secret" }),
       MAILER_URL: envField.string({ context: "server", access: "secret" }),
     },
   },

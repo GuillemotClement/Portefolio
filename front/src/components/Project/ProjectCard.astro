@@ -1,72 +1,125 @@
 ---
 import Tag from "../Ui/Tag.astro";
+import ProjectIllustration from "./ProjectIllustration.astro";
 
-import type { Project, Status, Techno } from "../../types/types";
-import { parseContent } from "../../utils/parse";
+import type { Project, ProjectStatus } from "../../types/types";
 
-// convention typage Astro 
 interface Props {
   project: Project;
-  reversed?: boolean;
 }
 
-const { project, reversed } = Astro.props as Props;
+const { project } = Astro.props as Props;
 
-const status: Status[] = project.expand.status_id;
-const features: string[] = project.features;
-const technos: Techno[] = project.expand.techno_id;
+// Libellés affichés pour chaque statut
+const statusLabels: Record<ProjectStatus, string> = {
+  prod: "En production",
+  dev: "En développement",
+  finish: "Terminé",
+  perso: "Perso",
+  pedagogique: "Pédagogique",
+  prive: "Dépôt privé",
+  alternance: "Alternance",
+};
 
+// Les statuts « forts » passent en noir/citron, les autres en clair
+const highlighted: ProjectStatus[] = ["prod", "dev", "finish", "alternance"];
+const sortedStatus = [...project.status].sort(
+  (a, b) => Number(highlighted.includes(b)) - Number(highlighted.includes(a)),
+);
+
+// Listes dépliables affichées sous la description
+const lists = [
+  { title: "Thématiques", items: project.themes ?? [] },
+  { title: "Fonctionnalités", items: project.features ?? [] },
+];
 ---
 
-<div class={`card-surface flex flex-col md:flex-row ${reversed ? 'md:flex-row-reverse' : ''} mb-10 overflow-hidden hover:shadow-lg transition-shadow items-center`}>
+<li
+  class="group flex flex-col overflow-hidden rounded-[10px] border border-line bg-white transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-ink hover:shadow-[6px_6px_0_var(--color-lime)]"
+>
+  <ProjectIllustration kind={project.illustration} />
 
-  <div class="flex-1 bg-gray-100 mockup-browser">
-    <div class="mockup-browser-toolbar">
-      {(project.isWebsite === true) && (
-        <div class="input">{project.url}</div>
-      )}
-    </div>
-    <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
-  </div>
+  <div class="flex flex-1 flex-col gap-3 p-6">
+    {
+      sortedStatus.length > 0 && (
+        <ul class="flex flex-wrap gap-1.5">
+          {sortedStatus.map((tag) => (
+            <Tag
+              title={statusLabels[tag]}
+              variant={highlighted.includes(tag) ? "night" : "light"}
+            />
+          ))}
+        </ul>
+      )
+    }
 
-  <div class="flex-1 p-8">
-    <div class="flex justify-between items-start gap-3 mb-3">
-      <h3 class="font-title text-2xl font-bold">{project.title}</h3>
-      <ul class="flex flex-wrap gap-2 justify-end">
-        {status.map((tag) => (
-          <Tag title={tag.title} />
-        ))}
-      </ul>
-    </div>
+    <h3 class="text-2xl">{project.title}</h3>
+    <p class="text-[15.5px] text-ink-muted">{project.description}</p>
 
-    <p class="text-gray-600 mb-4">{parseContent(project.description)}</p>
+    {
+      project.reason && (
+        <p class="border-l-2 border-lime pl-3 text-[14.5px] text-ink-muted">
+          {project.reason}
+        </p>
+      )
+    }
 
-    <h4 class="font-technique text-xs uppercase text-gray-400 mb-2">Fonctionnalités</h4>
-    <ul class="list-disc ps-4 mb-4 text-gray-600 space-y-1">
-      {features.map((feature) => (
-        <li>{feature}</li>
+    {
+      lists.map(
+        (list) =>
+          list.items.length > 0 && (
+            <details class="text-[15px] text-ink-muted">
+              <summary class="cursor-pointer font-bold text-ink">{list.title}</summary>
+              <ul class="mt-2 space-y-1">
+                {list.items.map((item) => (
+                  <li class="relative pl-5 before:absolute before:left-0 before:font-bold before:text-ink before:content-['✓']">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ),
+      )
+    }
+
+    <ul class="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label="Technologies">
+      {project.technos.map((techno) => (
+        <li class="rounded-full border border-line px-2.5 py-1 text-[13px]">{techno}</li>
       ))}
     </ul>
 
-    <div class="flex flex-wrap gap-2 mb-5">
-      {technos.map(techno => (
-        <Tag title={techno.title} />
-      ))}
+    <div class="flex gap-4.5 pt-1 text-[15px] font-bold">
+      {
+        project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-b-2 border-lime no-underline hover:bg-lime"
+          >
+            Voir le site →
+          </a>
+        )
+      }
+      {
+        project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-b-2 border-lime no-underline hover:bg-lime"
+          >
+            Code source →
+          </a>
+        )
+      }
+      {
+        !project.url && !project.github && (
+          <span class="text-ink-muted">
+            {project.linkNote ?? "Code présenté sur demande, en entretien"}
+          </span>
+        )
+      }
     </div>
-
-    <div class="flex gap-5 font-technique text-sm">
-      {(project.isWebsite === true) && (
-        <a href={project.url} target="_blank" class="flex items-center gap-2 hover:text-accent">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          Voir le site
-        </a>
-      )}
-
-      <a href={project.github} target="_blank" class="flex items-center gap-2 hover:text-accent">
-        <i class="fa-brands fa-github"></i>
-        Code source
-      </a>
-    </div>
-
   </div>
-</div>
+</li>

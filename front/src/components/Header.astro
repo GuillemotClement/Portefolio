@@ -1,16 +1,65 @@
-<header class="navbar bg-beige/80 backdrop-blur shadow-sm sticky top-0 z-10 py-3 px-10">
-  <div class="flex-1">
-    <h2 class="font-title text-xl font-bold">Guillemot Clément</h2>
-  </div>
+---
+import CtaButton from "./Ui/CtaButton.astro";
+import { navLinks, site } from "@/data/site";
+---
 
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1 gap-1 font-technique text-sm">
-			<li><a href="#about" class="hover:text-accent">À propos</a></li>
-			<li><a href="#experience" class="hover:text-accent">Expériences</a></li>
-			<li><a href="#formation" class="hover:text-accent">Formations</a></li>
-			<li><a href="#skill" class="hover:text-accent">Compétences</a></li>
-			<li><a href="#project" class="hover:text-accent">Projets</a></li>
-			<li><a href="#contact" class="hover:text-accent">Contact</a></li>
-    </ul>
+<header class="bg-night text-on-night">
+  <div class="container-page">
+    <nav
+      class="flex items-center justify-between gap-4 border-b border-night-line py-5"
+      aria-label="Navigation principale"
+    >
+      <a href="#" class="flex items-center gap-2.5 font-extrabold tracking-[-0.02em] no-underline">
+        <span class="grid h-9 w-9 place-items-center rounded-md bg-lime text-[15px] text-night">
+          {site.initials}
+        </span>
+        <span>{site.name}</span>
+      </a>
+
+      <ul class="hidden gap-7 text-[15px] lg:flex">
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.href} class="text-on-night-muted no-underline hover:text-on-night">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <CtaButton href="#contact" size="sm" class="hidden lg:inline-block">
+        Me contacter
+      </CtaButton>
+
+      <!-- Menu mobile : <details> fonctionne sans JavaScript et au clavier -->
+      <details class="group relative lg:hidden">
+        <summary
+          class="cursor-pointer list-none rounded-md border-2 border-night-line px-3 py-1.5 text-sm font-bold [&::-webkit-details-marker]:hidden"
+        >
+          <span class="group-open:hidden">Menu</span>
+          <span class="hidden group-open:inline">Fermer</span>
+        </summary>
+        <ul class="absolute top-12 right-0 z-10 min-w-48 rounded-lg border border-night-line bg-night-2 p-2.5">
+          {navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="block rounded px-2.5 py-2 text-on-night-muted no-underline hover:text-on-night"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </nav>
   </div>
 </header>
+
+<script>
+  // Ferme le menu mobile après un clic sur un lien
+  document.querySelectorAll<HTMLDetailsElement>("header details").forEach((menu) => {
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => menu.removeAttribute("open"));
+    });
+  });
+</script>

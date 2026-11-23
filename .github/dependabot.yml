@@ -22,7 +22,3 @@ updates:
     schedule:
       interval: "weekly"
 
-  - package-ecosystem: "docker"
-    directory: "/pocketbase"
-    schedule:
-      interval: "weekly"

@@ -1,20 +1,22 @@
 ---
-import type { Techno } from '@/types/types';
-import SkillItem from './SkillItem.astro';
- 
+import type { Skill } from "@/types/types";
+import SkillItem from "./SkillItem.astro";
+
 interface Props {
-  skills: Techno[],
+  skills: Skill[];
   title: string;
+  index: number;
 }
 
-const { skills, title } = Astro.props as Props;
+const { skills, title, index } = Astro.props as Props;
 ---
 
-<div class="card-surface p-6">
-  <h3 class="font-technique font-bold uppercase text-center text-sm tracking-widest text-accent mb-4">{title}</h3>
-  <ul>
-    {skills.map(skill => (
-      <SkillItem skill={skill} />
-    ))}
+<article class="border-b border-night-line pt-8 pb-9 md:pr-7">
+  <div class="num-outline-lime text-[40px]" aria-hidden="true">
+    {String(index).padStart(2, "0")}
+  </div>
+  <h3 class="mt-4.5 mb-4 text-xl tracking-[-0.02em]">{title}</h3>
+  <ul class="flex flex-wrap gap-2">
+    {skills.map((skill) => <SkillItem skill={skill} />)}
   </ul>
-</div>
+</article>

@@ -1,28 +1,56 @@
 ---
+import { navLinks, site } from "@/data/site";
 
+const year = new Date().getFullYear();
+
+const externalLinks = [
+  { href: site.github, label: "GitHub" },
+  { href: site.linkedin, label: "LinkedIn" },
+];
 ---
 
-<footer class="border-t bg-gray-950 text-white px-5 py-10">
-    <div class="container mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <div class="">
-            <p class="font-title font-bold">Clément Guillemot</p>
-            <p class="text-gray-500 text-sm">Développeur Full-Stack - Bretagne, France</p>
-        </div>
+<footer class="bg-night pt-12 pb-8 text-[15px] text-on-night-muted">
+  <div class="container-page">
+    <div class="grid gap-8 border-b border-night-line pb-8 md:grid-cols-[2fr_1fr_1fr]">
+      <div>
+        <a href="#" class="flex items-center gap-2.5 font-extrabold tracking-[-0.02em] text-on-night no-underline">
+          <span class="grid h-9 w-9 place-items-center rounded-md bg-lime text-[15px] text-night">
+            {site.initials}
+          </span>
+          <span>{site.name}</span>
+        </a>
+        <p class="mt-3.5 max-w-[40ch]">
+          {site.role}, ancien technicien aéronautique. {site.availability}.
+        </p>
+      </div>
 
-        <ul class="flex flex-wrap items-center gap-x-6 font-technique text-sm">
-            <li><a href="#about" class="hover:text-accent">À propos</a></li>
-            <li><a href="#project" class="hover:text-accent">Projets</a></li>
-            <li><a href="#contact" class="hover:text-accent">Contact</a></li>
-            <li>
-                <a href="#" class="flex items-center gap-2 hover:text-accent">
-                    <i class="fa-solid fa-arrow-up"></i>
-                    Haut
-                </a>
-            </li>
+      <nav aria-label="Navigation du pied de page">
+        <h2 class="mb-3 text-sm tracking-widest text-on-night uppercase">Navigation</h2>
+        <ul class="space-y-1.5">
+          {navLinks.map((link) => (
+            <li><a href={link.href} class="no-underline hover:text-on-night">{link.label}</a></li>
+          ))}
         </ul>
+      </nav>
+
+      <div>
+        <h2 class="mb-3 text-sm tracking-widest text-on-night uppercase">Liens</h2>
+        <ul class="space-y-1.5">
+          {externalLinks.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferrer" class="no-underline hover:text-on-night">
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li><a href={site.cv} download={site.cvFileName} class="no-underline hover:text-on-night">CV (PDF)</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="container mx-auto border-t border-gray-200 pt-5">
-        <p class="text-gray-400 text-sm">&copy; 2026 Guillemot Clément - Conçu et développé avec soin.</p>
+    <div class="flex flex-wrap justify-between gap-3 pt-6 text-[13px]">
+      <span>© {year} {site.name}</span>
+      <span>Fait avec Astro et Tailwind</span>
     </div>
+  </div>
 </footer>

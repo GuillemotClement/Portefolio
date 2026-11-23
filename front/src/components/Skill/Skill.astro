@@ -1,37 +1,33 @@
 ---
-import { getCollectionRecords } from "@/services/pocketbase.service";
 import SkillCol from "./SkillCol.astro";
-import type { Techno } from "../../types/types"
-const skills = await getCollectionRecords<Techno>('techno');
+import SectionHeading from "../Ui/SectionHeading.astro";
+import { skillGroups } from "@/data/skills";
 
-const frontSkills = skills.filter(skill => {
-    if(skill.type == "frontend" && skill.isVisible){
-        return skill
-    }
-})
-
-const backSkills = skills.filter(skill => {
-    if(skill.type === "backend" && skill.isVisible){
-        return skill
-    }
-})
-
-const toolSkills = skills.filter(skill => {
-    if(skill.type === 'tools' && skill.isVisible){
-        return skill
-    }
-})
+const hasLearning = skillGroups.some((group) =>
+  group.skills.some((skill) => skill.isLearning),
+);
 ---
-<div class="bg-beige py-20" id="skill">
-    <div class="container mx-auto px-5">
-        <div class="mb-10">
-            <h2 class="title-section mb-0">Stack</h2>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <SkillCol skills={frontSkills} title="Front-End"/>
-            <SkillCol skills={backSkills} title="Back-End" />
-            <SkillCol skills={toolSkills} title="Outils" /> 
-        </div>
+<section id="competences" class="bg-night py-16 text-on-night md:py-24">
+  <div class="container-page">
+    <SectionHeading number="05" label="Compétences" dark>
+      <Fragment slot="title">Ma boîte à outils</Fragment>
+      Les technologies que j'utilise le plus, du front à la mise en production.
+    </SectionHeading>
+
+    <div class="grid border-t border-night-line md:grid-cols-3">
+      {skillGroups.map((group, i) => (
+        <SkillCol skills={group.skills} title={group.title} index={i + 1} />
+      ))}
     </div>
-</div>
+
+    {
+      hasLearning && (
+        <p class="mt-7 text-sm text-on-night-muted">
+          Les compétences encadrées en <span class="text-lime">citron</span> sont
+          en cours d'apprentissage.
+        </p>
+      )
+    }
+  </div>
+</section>

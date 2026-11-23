@@ -17,19 +17,17 @@
   },
   "dependencies": {
     "@astrojs/node": "^10.1.4",
+    "@lucide/astro": "^1.61.0",
     "@octokit/core": "^7.0.6",
-    "@tailwindcss/vite": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^6.4.8",
-    "daisyui": "^5.5.23",
+    "daisyui": "^5.7.50",
     "he": "^1.2.0",
-    "html-to-text": "^10.0.0",
-    "pocketbase": "^0.27.0",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/he": "^1.2.3",
-    "@types/html-to-text": "^9.0.4",
     "@types/node": "^26.0.1",
     "@typescript-eslint/parser": "^8.61.1",
     "astro-eslint-parser": "^1.4.0",

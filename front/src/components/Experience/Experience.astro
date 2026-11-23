@@ -1,20 +1,18 @@
 ---
-import { getCollectionRecords  } from "../../services/pocketbase.service";
 import ExperienceCard from "./ExperienceCard.astro";
-import type {Experience} from "../../types/types"
-
-const experiences = await getCollectionRecords<Experience>('experience',);
+import SectionHeading from "../Ui/SectionHeading.astro";
+import { experiences } from "@/data/experiences";
 ---
 
-<section class="section section-secondary" id="experience">
-    <div class="section-container">
-        <h2 class="section-title">Expériences</h2>
-        <div class="divider"></div>
-        <div>
-            {experiences.map((experience) => (
-                <ExperienceCard experience={experience} />
-                <div class="divider"></div>
-            ))}
-        </div>
-    </div>
+<section id="parcours" class="py-16 md:py-24">
+  <div class="container-page">
+    <SectionHeading number="03" label="Parcours">
+      <Fragment slot="title">Du hangar au code</Fragment>
+      Mes expériences professionnelles, de la plus récente à la plus ancienne.
+    </SectionHeading>
+
+    <ol class="steps ml-4.5 border-l-2 border-line">
+      {experiences.map((experience) => <ExperienceCard experience={experience} />)}
+    </ol>
+  </div>
 </section>

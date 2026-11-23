@@ -1,18 +1,71 @@
 ---
+import CtaButton from "./Ui/CtaButton.astro";
+import { site } from "@/data/site";
 
+const checklist = [
+  "Rigueur",
+  "Résolution de problèmes",
+  "Travail en équipe",
+  "Titre CDA (Bac+3/4)",
+  "Full-stack PHP",
+];
+
+const trust = [
+  site.availability,
+  "Bretagne · Morbihan",
+  "Poste full-stack ou back-end",
+];
 ---
-<div class="hero bg-beige min-h-screen">
-  <div class="hero-content text-center">
-    <div class="max-w-2xl">
-      <p class="subtitle-section mb-5">Développeur Full-Stack</p>
-      <h1 class="font-title text-5xl font-bold mb-6">Clément Guillemot</h1>
-      <p class="text-gray-600 mb-8">
-       Ancien technicien de maintenance aéronautique reconverti dans le développement logiciel.
-      </p>
-      <div class="flex justify-center gap-4">
-        <a class="btn bg-accent text-white border-none hover:opacity-90" href="#project">Voir mes projets</a>
-        <a class="btn btn-outline" href="#contact">Me contacter</a>
+
+<section class="bg-night text-on-night">
+  <div class="container-page py-14 md:pt-25 md:pb-22">
+    <div class="grid items-center gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
+      <div>
+        <p class="mb-5.5 text-[13px] font-bold tracking-[.12em] text-lime uppercase">
+          {site.role}
+        </p>
+        <h1 class="max-w-[15ch] text-[clamp(40px,6.4vw,74px)]">
+          8 ans à fiabiliser des hélicoptères.{" "}
+          <span class="text-lime">Maintenant, du code.</span>
+        </h1>
+        <p class="mt-6.5 max-w-[54ch] text-[clamp(17px,2vw,20px)] text-on-night-muted">
+          Ancien technicien de maintenance aéronautique, je conçois des
+          applications web robustes avec la même rigueur.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3.5">
+          <CtaButton href="#projets">Voir mes projets</CtaButton>
+          <CtaButton href={site.cv} variant="outline-light" download={site.cvFileName}>
+            Télécharger mon CV
+          </CtaButton>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-[10px] border border-night-line bg-night-2 font-mono">
+        <div class="flex justify-between border-b border-night-line px-4.5 py-3 text-xs tracking-[.08em] text-on-night-muted uppercase">
+          <span>Checklist pré-vol</span>
+          <span aria-hidden="true">CG-2026</span>
+        </div>
+        <ul class="px-4.5 pt-3.5 pb-4.5 text-sm leading-[2.2] text-on-night-muted">
+          {checklist.map((item) => (
+            <li class="flex gap-2.5">
+              <span>{item}</span>
+              <span class="mb-2.5 flex-1 border-b border-dotted border-night-line" aria-hidden="true" />
+              <b class="font-medium text-lime">OK</b>
+            </li>
+          ))}
+          <li class="flex gap-2.5">
+            <span class="text-lime">▸ Prochain poste</span>
+            <span class="mb-2.5 flex-1 border-b border-dotted border-night-line" aria-hidden="true" />
+            <b class="font-medium text-on-night">vous ?</b>
+          </li>
+        </ul>
       </div>
     </div>
+
+    <ul class="mt-12 flex flex-col gap-3 border-t border-night-line pt-6 text-[15px] text-on-night-muted md:mt-16 md:flex-row md:flex-wrap md:gap-8">
+      {trust.map((item) => (
+        <li class="before:mr-2.5 before:text-lime before:content-['✦']">{item}</li>
+      ))}
+    </ul>
   </div>
-</div>
+</section>

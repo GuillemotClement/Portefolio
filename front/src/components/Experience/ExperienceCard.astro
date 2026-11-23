@@ -1,36 +1,37 @@
 ---
 import type { Experience } from "../../types/types";
-import { getFormatedPeriode } from "../../utils/date";
 
 interface Props {
-  experience: Experience
+  experience: Experience;
 }
 
 const { experience } = Astro.props as Props;
-
-const periode = getFormatedPeriode(experience.startPeriode, experience.endPeriode);
-
-
 ---
 
-<div class="flex flex-col md:flex-row gap-8 items-start md:items-center mb-5">
-  <div class="flex-1 flex items-center justify-between gap-6">
-    <div class="">
-      <h3 class="h3">{experience.enterprise}</h3>
-      <p class="periode">{periode}</p>
-      <p class="city">{experience.city}</p>
-    </div>
-    <div class="h-16 w-16 flex-shrink-0 flex items-center">
-      <img src={experience.image} alt={experience.enterprise} class="w-full h-full object-contain">
+<li class="relative pb-12 pl-10 last:pb-0">
+  <div class="grid gap-2 md:grid-cols-[200px_1fr] md:gap-8">
+    <p class="pt-1.5 font-mono text-[13px] text-ink-muted">{experience.date}</p>
+    <div>
+      <h3 class="text-[22px] tracking-[-0.02em]">
+        {experience.title}
+        {
+          experience.isPivot && (
+            <span class="ml-3 inline-block rounded bg-lime px-2 py-1 align-middle text-[11px] font-bold tracking-[.08em] text-night uppercase">
+              Reconversion
+            </span>
+          )
+        }
+      </h3>
+      <p class="mt-1.5 mb-3.5 text-[15px] text-ink-muted">
+        <b class="text-ink">{experience.enterprise}</b> · {experience.city}
+      </p>
+      <ul class="space-y-1.5">
+        {experience.tasks.map((task) => (
+          <li class="relative pl-5 text-[15.5px] text-ink-muted before:absolute before:left-0 before:font-bold before:text-ink before:content-['✓']">
+            {task}
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
-
-  <div class="flex-1">
-    <h3 class="h3">{experience.title}</h3>
-    <ul class="list-disc ps-4 text-gray-600 space-y-1">
-      {experience.tasks.map(task => (
-        <li>{task}</li>
-      ))}
-    </ul>
-  </div>
-</div>
+</li>

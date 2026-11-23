@@ -1,13 +1,19 @@
 ---
-
 interface Props {
   title: string;
+  variant?: "night" | "light";
 }
 
-const {title} = Astro.props as Props;
-
+const { title, variant = "night" } = Astro.props;
 ---
 
-<div class="font-technique text-xs uppercase tracking-wide border border-accent/30 text-accent bg-accent/10 rounded-full px-3 py-1">
+<li
+  class:list={[
+    "rounded px-2.5 py-1.5 text-xs font-bold tracking-[.08em] whitespace-nowrap uppercase",
+    variant === "night"
+      ? "bg-night text-lime"
+      : "border border-line bg-soft text-ink-muted",
+  ]}
+>
   {title}
-</div>
+</li>
