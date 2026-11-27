@@ -16,9 +16,9 @@
     "lint:fix": "eslint . --ext .ts,.astro --fix && prettier --write ."
   },
   "dependencies": {
-    "@astrojs/node": "^10.1.4",
+    "@astrojs/node": "^11.1.14",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^6.4.8",
+    "astro": "^7.4.13",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
